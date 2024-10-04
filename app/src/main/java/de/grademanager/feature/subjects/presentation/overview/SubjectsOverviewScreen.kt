@@ -1,10 +1,7 @@
 package de.grademanager.feature.subjects.presentation.overview
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,22 +11,21 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import de.grademanager.R
 import de.grademanager.core.presentation.components.DefaultTopAppBar
+import de.grademanager.core.presentation.effects.vibrate
 import de.grademanager.core.presentation.theme.AppAssets
 import de.grademanager.core.presentation.theme.GradeManagerTheme
+import de.grademanager.feature.subjects.domain.models.SubjectMock
 import de.grademanager.feature.subjects.presentation.manage_subject.ManageSubjectDialog
 import de.grademanager.feature.subjects.presentation.manage_subject.ManageSubjectMode
 import de.grademanager.feature.subjects.presentation.overview.components.NoSubjectsIndicator
@@ -41,6 +37,8 @@ import org.koin.androidx.compose.koinViewModel
 fun SubjectsOverviewScreen(
     navigator: DestinationsNavigator
 ) {
+    val context = LocalContext.current
+
     val viewModel: SubjectsOverviewViewModel = koinViewModel()
     val uiState by viewModel.uiState.collectAsState()
 
@@ -72,6 +70,15 @@ fun SubjectsOverviewScreen(
             when (event) {
                 is SubjectOverviewUiEvent.SubjectClick -> {
                     // TODO: Navigate to subject
+                }
+
+                is SubjectOverviewUiEvent.SubjectLongClick -> {
+                    vibrate(
+                        context = context,
+                        duration = 20
+                    )
+
+                    viewModel.onUiEvent(event = event)
                 }
 
                 else -> viewModel.onUiEvent(event = event)
@@ -156,7 +163,7 @@ private fun PreviewSubjectsOverviewScreen() {
     GradeManagerTheme {
         SubjectsOverviewScreen(
             uiState = SubjectOverviewUiState(
-                subjects = emptyList()
+                subjects = listOf(SubjectMock)
             ),
             onUiEvent = {}
         )

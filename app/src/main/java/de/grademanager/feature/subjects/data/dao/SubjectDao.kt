@@ -20,6 +20,9 @@ interface SubjectDao {
         orderAscending: Boolean = true
     ): Flow<List<SubjectWithGrades>>
 
+    @Query("SELECT COUNT(*) FROM subjects s WHERE s.name = :name")
+    suspend fun doesSubjectAlreadyExist(name: String): Int
+
     @Query("SELECT s.* FROM subjects s WHERE id = :id")
     suspend fun findById(id: Int): SubjectWithGrades?
 

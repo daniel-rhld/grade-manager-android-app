@@ -9,4 +9,6 @@
     <string name="manage_subject_dialog_name_hint">Name des Faches</string>
     <string name="manage_subject_dialog_button_save">Speichern</string>
     <string name="manage_subject_dialog_error_no_name">Bitte gib den Namen des Faches an</string>
+    <string name="manage_subject_dialog_error_subject_not_found">Dieses Fach wurde nicht gefunden</string>
+    <string name="manage_subject_dialog_error_subject_with_same_name_already_exists">Es existiert bereits ein Fach mit diesem Namen</string>
 </resources>

@@ -10,4 +10,6 @@
     <string name="manage_subject_dialog_name_hint">Name of the subject</string>
     <string name="manage_subject_dialog_button_save">Save</string>
     <string name="manage_subject_dialog_error_no_name">Please enter the name of the subject</string>
+    <string name="manage_subject_dialog_error_subject_not_found">This subject was not found</string>
+    <string name="manage_subject_dialog_error_subject_with_same_name_already_exists">There is already a subject with this name</string>
 </resources>

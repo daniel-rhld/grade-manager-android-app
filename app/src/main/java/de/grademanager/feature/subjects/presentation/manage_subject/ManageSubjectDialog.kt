@@ -1,5 +1,6 @@
 package de.grademanager.feature.subjects.presentation.manage_subject
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,8 +16,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,6 +29,8 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.grademanager.R
+import de.grademanager.core.data.model.StringWrapper
+import de.grademanager.core.data.model.get
 import de.grademanager.core.presentation.theme.AppAssets
 import de.grademanager.core.presentation.theme.GradeManagerTheme
 
@@ -93,10 +98,33 @@ fun ManageSubjectDialogContent(
                     text = stringResource(R.string.manage_subject_dialog_name_hint)
                 )
             },
+            isError = uiState.nameError != null,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = AppAssets.spacing.bottomDialogContentSpacing)
         )
+
+        AnimatedVisibility(
+            visible = uiState.nameError != null
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = AppAssets.spacing.bottomDialogContentSpacing + 4.dp
+                    )
+            ) {
+                Spacer(
+                    modifier = Modifier.height(2.dp)
+                )
+
+                Text(
+                    text = uiState.nameError?.get() ?: "",
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+        }
 
         Spacer(
             modifier = Modifier.height(AppAssets.spacing.verticalItemSpacing)
@@ -144,7 +172,8 @@ private fun PreviewManageSubjectDialogContentModeSave() {
                 mode = ManageSubjectMode.Create,
                 uiState = ManageSubjectDialogUiState(
                     name = "",
-                    buttonSaveEnabled = false
+                    nameError = null,
+                    buttonSaveEnabled = false,
                 ),
                 onUiEvent = {}
             )
@@ -163,6 +192,7 @@ private fun PreviewManageSubjectDialogContentModeUpdate() {
                 mode = ManageSubjectMode.Update,
                 uiState = ManageSubjectDialogUiState(
                     name = "",
+                    nameError = StringWrapper.Value(value = "Error"),
                     buttonSaveEnabled = false
                 ),
                 onUiEvent = {}

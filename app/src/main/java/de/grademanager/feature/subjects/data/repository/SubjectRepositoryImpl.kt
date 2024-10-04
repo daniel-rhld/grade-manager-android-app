@@ -1,7 +1,9 @@
 package de.grademanager.feature.subjects.data.repository
 
+import de.grademanager.R
 import de.grademanager.core.data.database.GradeManagerDatabase
 import de.grademanager.core.data.model.DataResult
+import de.grademanager.core.data.model.asStringWrapper
 import de.grademanager.feature.grades.data.model.entity.GradeEntity
 import de.grademanager.feature.grades.data.model.entity.mapToDomainObject
 import de.grademanager.feature.subjects.data.model.entity.SubjectEntity
@@ -30,13 +32,19 @@ class SubjectRepositoryImpl(
         }
     }
 
+    override suspend fun doesSubjectAlreadyExist(name: String): Boolean {
+        val count = database.getSubjectDao().doesSubjectAlreadyExist(name)
+        return count >= 1
+    }
+
     override suspend fun findById(id: Int): DataResult<Subject> {
         return database.getSubjectDao().findById(id = id).let { subject ->
             if (subject != null) {
                 DataResult.Success(subject.mapToDomainObject())
             } else {
-                // TODO: Set error message
-                DataResult.Failure(error = null)
+                DataResult.Failure(
+                    error = R.string.manage_subject_dialog_error_subject_not_found.asStringWrapper()
+                )
             }
         }
     }

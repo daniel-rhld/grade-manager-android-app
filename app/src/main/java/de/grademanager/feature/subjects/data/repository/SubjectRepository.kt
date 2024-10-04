@@ -12,6 +12,8 @@ interface SubjectRepository {
         orderAscending: Boolean
     ): Flow<List<Subject>>
 
+    suspend fun doesSubjectAlreadyExist(name: String): Boolean
+
     suspend fun findById(id: Int): DataResult<Subject>
 
     suspend fun upsert(value: SubjectEntity): DataResult<Unit>

@@ -1,9 +1,11 @@
 package de.grademanager.feature.subjects.presentation.overview
 
+import android.provider.ContactsContract.Data
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.grademanager.core.data.model.DataResult
 import de.grademanager.core.data.model.State
+import de.grademanager.core.data.model.fold
 import de.grademanager.feature.subjects.domain.models.Subject
 import de.grademanager.feature.subjects.domain.use_cases.CreateSubjectUseCase
 import de.grademanager.feature.subjects.domain.use_cases.GetExistingSubjectsOrdered
@@ -32,6 +34,7 @@ class SubjectsOverviewViewModel(
     val createSubjectDialogUiState = State(
         ManageSubjectDialogUiState(
             name = "",
+            nameError = null,
             buttonSaveEnabled = false
         )
     )
@@ -41,6 +44,7 @@ class SubjectsOverviewViewModel(
     val updateSubjectDialogUiState = State(
         ManageSubjectDialogUiState(
             name = "",
+            nameError = null,
             buttonSaveEnabled = false
         )
     )
@@ -115,12 +119,24 @@ class SubjectsOverviewViewModel(
                     createSubjectUseCase.invoke(
                         name = createSubjectDialogUiState.currentValue().name
                     ).let { result ->
-                        if (result is DataResult.Success) {
-                            createSubjectDialogName.update("")
-                            createSubjectDialogVisible.update(false)
-                        } else {
-                            // TODO: Add error handling
-                        }
+                        result.fold(
+                            onSuccess = {
+                                createSubjectDialogName.update("")
+                                createSubjectDialogVisible.update(false)
+                                createSubjectDialogUiState.update {
+                                    it.copy(
+                                        nameError = null
+                                    )
+                                }
+                            },
+                            onFailure = { error ->
+                                createSubjectDialogUiState.update {
+                                    it.copy(
+                                        nameError = error
+                                    )
+                                }
+                            }
+                        )
                     }
                 }
             }
@@ -147,12 +163,24 @@ class SubjectsOverviewViewModel(
                             id = id,
                             name = name
                         ).let { result ->
-                            if (result is DataResult.Success) {
-                                updateSubjectDialogName.update("")
-                                updateSubjectDialogVisible.update(false)
-                            } else {
-                                // TODO: Add error handling
-                            }
+                            result.fold(
+                                onSuccess = {
+                                    updateSubjectDialogName.update("")
+                                    updateSubjectDialogVisible.update(false)
+                                    updateSubjectDialogUiState.update {
+                                        it.copy(
+                                            nameError = null
+                                        )
+                                    }
+                                },
+                                onFailure = { error ->
+                                    updateSubjectDialogUiState.update {
+                                        it.copy(
+                                            nameError = error
+                                        )
+                                    }
+                                }
+                            )
                         }
                     }
                 }
