@@ -12,7 +12,7 @@ import kotlin.coroutines.EmptyCoroutineContext
 
 class State <T>(initial: T) {
 
-    private val _state = MutableStateFlow(initial)
+    val _state = MutableStateFlow(initial)
     val state = _state.asStateFlow()
 
     fun update(other: T) {

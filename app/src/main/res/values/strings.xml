@@ -2,6 +2,8 @@
     <string name="app_name" translatable="false">GradeManager</string>
     <string name="date_format_short">dd MM yyyy</string>
 
+    <string name="date_picker_button_save">Apply</string>
+
     <string name="subjects_overview_toolbar_title">Subjects</string>
     <string name="subjects_overview_no_subjects_created_label">Currently you have not created any subjects</string>
     <string name="subjects_overview_button_create_first_subjects">Create your first subject</string>
@@ -17,4 +19,11 @@
     <string name="subject_detail_no_grades_created_label">Currently you have not created any grades in this subject</string>
     <string name="subject_detail_button_create_first_grade">Create your first grade</string>
     <string name="subject_detail_grade_label_no_description">Without description</string>
+
+    <string name="add_grade_dialog_title">Add grade</string>
+    <string name="add_grade_dialog_hint_grade">Your grade:</string>
+    <string name="add_grade_dialog_hint_weighting">Weighting:</string>
+    <string name="add_grade_dialog_hint_description">Description:</string>
+    <string name="add_grade_dialog_hint_received_at">Received at:</string>
+    <string name="add_grade_dialog_button_save">Save</string>
 </resources>

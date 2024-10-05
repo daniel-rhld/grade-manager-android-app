@@ -1,4 +1,4 @@
-package de.grademanager.feature.subjects.presentation.detail.components
+package de.grademanager.feature.grades.presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

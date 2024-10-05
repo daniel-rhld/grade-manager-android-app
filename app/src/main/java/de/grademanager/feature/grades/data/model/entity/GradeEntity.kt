@@ -31,10 +31,10 @@ data class GradeEntity(
     val createdAt: Date,
 
     @ColumnInfo(name = "updated_at")
-    val updatedAt: Date?,
+    val updatedAt: Date? = null,
 
     @ColumnInfo(name = "deleted_at")
-    val deletedAt: Date?
+    val deletedAt: Date? = null
 )
 
 fun GradeEntity.mapToDomainObject() = Grade(

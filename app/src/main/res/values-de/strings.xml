@@ -2,6 +2,8 @@
 <resources>
     <string name="date_format_short">dd.MM.yyyy</string>
 
+    <string name="date_picker_button_save">Übernehmen</string>
+
     <string name="subjects_overview_toolbar_title">Fächer</string>
     <string name="subjects_overview_no_subjects_created_label">Aktuell hast du noch keine Fächer angelegt</string>
     <string name="subjects_overview_button_create_first_subjects">Erstelle dein erstes Fach</string>
@@ -17,4 +19,11 @@
     <string name="subject_detail_no_grades_created_label">Aktuell hast du noch keine Noten in diesem Fach angelegt</string>
     <string name="subject_detail_button_create_first_grade">Erstelle dein erste Note</string>
     <string name="subject_detail_grade_label_no_description">Ohne Beschreibung</string>
+
+    <string name="add_grade_dialog_title">Note hinzufügen</string>
+    <string name="add_grade_dialog_hint_grade">Deine Note:</string>
+    <string name="add_grade_dialog_hint_weighting">Gewichtung:</string>
+    <string name="add_grade_dialog_hint_description">Notizen:</string>
+    <string name="add_grade_dialog_hint_received_at">Erhalten am</string>
+    <string name="add_grade_dialog_button_save">Speichern</string>
 </resources>

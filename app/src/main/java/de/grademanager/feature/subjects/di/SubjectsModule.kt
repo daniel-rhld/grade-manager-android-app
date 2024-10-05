@@ -3,6 +3,7 @@ package de.grademanager.feature.subjects.di
 import de.grademanager.feature.subjects.data.repository.SubjectRepository
 import de.grademanager.feature.subjects.data.repository.SubjectRepositoryImpl
 import de.grademanager.feature.subjects.domain.use_cases.CreateSubjectUseCase
+import de.grademanager.feature.subjects.domain.use_cases.FindSubjectUseCase
 import de.grademanager.feature.subjects.domain.use_cases.GetExistingSubjectsOrdered
 import de.grademanager.feature.subjects.domain.use_cases.UpdateSubjectUseCase
 import de.grademanager.feature.subjects.presentation.detail.SubjectDetailViewModel
@@ -24,6 +25,12 @@ val SubjectsModule = module {
     }
 
     single {
+        FindSubjectUseCase(
+            subjectRepository = get()
+        )
+    }
+
+    single {
         CreateSubjectUseCase(
             subjectRepository = get()
         )
@@ -31,7 +38,8 @@ val SubjectsModule = module {
 
     single {
         UpdateSubjectUseCase(
-            subjectRepository = get()
+            subjectRepository = get(),
+            findSubjectUseCase = get()
         )
     }
 
@@ -45,6 +53,9 @@ val SubjectsModule = module {
 
     viewModel {
         SubjectDetailViewModel(
+            getAllGradesForSubjectUseCase = get(),
+            createGradeUseCase = get(),
+            snackbarController = get(),
             savedStateHandle = get()
         )
     }

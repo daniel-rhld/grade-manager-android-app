@@ -30,7 +30,7 @@ fun Double.formatWeighting(): String {
 }
 
 fun Double.isGoodGrade(): Boolean {
-    return this < 2.5
+    return this >= 1.0 && this < 2.5
 }
 
 fun Double.isModerateGrade(): Boolean {
@@ -38,5 +38,5 @@ fun Double.isModerateGrade(): Boolean {
 }
 
 fun Double.isBadGrade(): Boolean {
-    return this >= 4.5
+    return this in 4.5..6.0
 }

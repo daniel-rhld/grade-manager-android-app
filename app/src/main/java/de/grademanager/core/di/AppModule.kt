@@ -4,6 +4,7 @@ import androidx.room.Room
 import de.grademanager.core.data.database.GradeManagerDatabase
 import de.grademanager.core.presentation.screens.AppHostViewModel
 import de.grademanager.core.presentation.snackbar.SnackbarController
+import de.grademanager.feature.grades.di.GradeModule
 import de.grademanager.feature.subjects.di.SubjectsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -27,4 +28,5 @@ val AppModule = module {
     }
 
     includes(SubjectsModule)
+    includes(GradeModule)
 }

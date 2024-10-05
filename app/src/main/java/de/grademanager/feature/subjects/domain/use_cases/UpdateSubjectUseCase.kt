@@ -7,7 +7,8 @@ import de.grademanager.feature.subjects.data.repository.SubjectRepository
 import de.grademanager.feature.subjects.domain.models.mapToEntity
 
 class UpdateSubjectUseCase(
-    private val subjectRepository: SubjectRepository
+    private val subjectRepository: SubjectRepository,
+    private val findSubjectUseCase: FindSubjectUseCase
 ) {
 
     suspend operator fun invoke(id: Int, name: String): DataResult<Unit> {
@@ -17,7 +18,7 @@ class UpdateSubjectUseCase(
             )
         }
 
-        subjectRepository.findById(id = id).let { result ->
+        findSubjectUseCase.invoke(subjectId = id).let { result ->
             when (result) {
                 is DataResult.Success -> {
                     return subjectRepository.upsert(
