@@ -25,9 +25,7 @@ class SubjectRepositoryImpl(
             orderAscending = orderAscending
         ).map { list ->
             list.map { subjectWithGrades ->
-                subjectWithGrades.self.mapToDomainObject(
-                    grades = subjectWithGrades.grades.map(GradeEntity::mapToDomainObject)
-                )
+                subjectWithGrades.mapToDomainObject()
             }
         }
     }

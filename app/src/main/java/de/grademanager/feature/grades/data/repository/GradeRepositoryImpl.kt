@@ -34,4 +34,10 @@ class GradeRepositoryImpl(
         return DataResult.Success(Unit)
     }
 
+    override suspend fun restoreById(id: Int): DataResult<Unit> {
+        database.getGradeDao().restoreById(id = id)
+
+        return DataResult.Success(Unit)
+    }
+
 }

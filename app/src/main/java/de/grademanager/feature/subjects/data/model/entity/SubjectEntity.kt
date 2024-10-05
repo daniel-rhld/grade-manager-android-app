@@ -32,5 +32,5 @@ fun SubjectEntity.mapToDomainObject(grades: List<Grade>) = Subject(
     createdAt = createdAt,
     updatedAt = updatedAt,
     deletedAt = deletedAt,
-    grades = grades
+    grades = grades.filter { it.deletedAt == null }
 )

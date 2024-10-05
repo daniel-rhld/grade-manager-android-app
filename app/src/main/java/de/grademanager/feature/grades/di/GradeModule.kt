@@ -3,7 +3,9 @@ package de.grademanager.feature.grades.di
 import de.grademanager.feature.grades.data.repository.GradeRepository
 import de.grademanager.feature.grades.data.repository.GradeRepositoryImpl
 import de.grademanager.feature.grades.domain.use_case.CreateGradeUseCase
+import de.grademanager.feature.grades.domain.use_case.DeleteGradeUseCase
 import de.grademanager.feature.grades.domain.use_case.GetAllGradesForSubjectUseCase
+import de.grademanager.feature.grades.domain.use_case.RestoreGradeUseCase
 import org.koin.dsl.module
 
 val GradeModule = module {
@@ -23,6 +25,18 @@ val GradeModule = module {
         CreateGradeUseCase(
             gradeRepository = get(),
             findSubjectUseCase = get()
+        )
+    }
+
+    single {
+        DeleteGradeUseCase(
+            gradeRepository = get()
+        )
+    }
+
+    single {
+        RestoreGradeUseCase(
+            gradeRepository = get()
         )
     }
 }

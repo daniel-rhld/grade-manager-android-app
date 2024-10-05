@@ -18,4 +18,7 @@ interface GradeDao {
     @Query("UPDATE grades SET deleted_at = :deletionTimestamp WHERE id = :id")
     suspend fun deleteById(id: Int, deletionTimestamp: Long)
 
+    @Query("UPDATE grades SET deleted_at = NULL WHERE id = :id")
+    suspend fun restoreById(id: Int)
+
 }

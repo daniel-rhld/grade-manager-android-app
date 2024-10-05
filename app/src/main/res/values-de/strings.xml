@@ -20,6 +20,9 @@
     <string name="subject_detail_button_create_first_grade">Erstelle dein erste Note</string>
     <string name="subject_detail_grade_label_no_description">Ohne Beschreibung</string>
 
+    <string name="subject_detail_grade_deleted">Note wurde gelöscht</string>
+    <string name="subject_detail_grade_deleted_revert">Rückgängig</string>
+
     <string name="add_grade_dialog_title">Note hinzufügen</string>
     <string name="add_grade_dialog_hint_grade">Deine Note:</string>
     <string name="add_grade_dialog_hint_weighting">Gewichtung:</string>

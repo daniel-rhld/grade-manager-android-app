@@ -13,4 +13,6 @@ interface GradeRepository {
 
     suspend fun deleteById(id: Int): DataResult<Unit>
 
+    suspend fun restoreById(id: Int): DataResult<Unit>
+
 }

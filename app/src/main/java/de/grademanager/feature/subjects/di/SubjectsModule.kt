@@ -55,6 +55,8 @@ val SubjectsModule = module {
         SubjectDetailViewModel(
             getAllGradesForSubjectUseCase = get(),
             createGradeUseCase = get(),
+            deleteGradeUseCase = get(),
+            restoreGradeUseCase = get(),
             snackbarController = get(),
             savedStateHandle = get()
         )

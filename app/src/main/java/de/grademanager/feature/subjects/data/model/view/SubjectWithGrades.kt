@@ -19,5 +19,5 @@ data class SubjectWithGrades(
 )
 
 fun SubjectWithGrades.mapToDomainObject() = self.mapToDomainObject(
-    grades = grades.map(GradeEntity::mapToDomainObject)
+    grades = grades.filter { it.deletedAt == null }.map(GradeEntity::mapToDomainObject)
 )

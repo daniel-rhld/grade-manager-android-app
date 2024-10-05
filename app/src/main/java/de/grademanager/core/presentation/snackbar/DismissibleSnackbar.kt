@@ -50,6 +50,7 @@ fun DismissibleSnackbar(
                     containerColor = containerColor ?: SnackbarDefaults.color,
                     contentColor = contentColor ?: SnackbarDefaults.contentColor,
                     actionContentColor = contentColor ?: SnackbarDefaults.contentColor,
+                    actionOnNewLine = true,
                     shape = RoundedCornerShape(size = 8.dp),
                     modifier = Modifier.fillMaxWidth().padding(padding)
                 )

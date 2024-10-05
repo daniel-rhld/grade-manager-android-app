@@ -1,14 +1,19 @@
 package de.grademanager.feature.subjects.presentation.detail
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ramcosta.composedestinations.generated.destinations.SubjectDetailScreenDestination
+import de.grademanager.R
 import de.grademanager.core.data.model.State
+import de.grademanager.core.data.model.asStringWrapper
 import de.grademanager.core.data.model.fold
 import de.grademanager.core.presentation.snackbar.SnackbarController
 import de.grademanager.feature.grades.domain.use_case.CreateGradeUseCase
+import de.grademanager.feature.grades.domain.use_case.DeleteGradeUseCase
 import de.grademanager.feature.grades.domain.use_case.GetAllGradesForSubjectUseCase
+import de.grademanager.feature.grades.domain.use_case.RestoreGradeUseCase
 import de.grademanager.feature.grades.presentation.add_grade.AddGradeDialogUiEvent
 import de.grademanager.feature.grades.presentation.add_grade.AddGradeDialogUiState
 import de.grademanager.feature.subjects.domain.models.GradeOrdering
@@ -19,6 +24,8 @@ import java.util.Date
 class SubjectDetailViewModel(
     private val getAllGradesForSubjectUseCase: GetAllGradesForSubjectUseCase,
     private val createGradeUseCase: CreateGradeUseCase,
+    private val deleteGradeUseCase: DeleteGradeUseCase,
+    private val restoreGradeUseCase: RestoreGradeUseCase,
 
     private val snackbarController: SnackbarController,
 
@@ -86,7 +93,36 @@ class SubjectDetailViewModel(
             }
 
             is SubjectDetailUiEvent.GradeDeleteRequested -> {
-                // TODO: Delete grade
+                Log.i("GradeManager", "delete requested")
+
+                viewModelScope.launch {
+                    deleteGradeUseCase.invoke(gradeId = event.grade.id).let { result ->
+                        result.fold(
+                            onSuccess = {
+                                viewModelScope.launch {
+                                    snackbarController.showNeutralSnackbar(
+                                        message = R.string.subject_detail_grade_deleted.asStringWrapper(),
+                                        actionLabel = R.string.subject_detail_grade_deleted_revert.asStringWrapper(),
+                                        onActionClick = {
+                                            viewModelScope.launch {
+                                                restoreGradeUseCase.invoke(gradeId = event.grade.id)
+                                            }
+                                        }
+                                    )
+                                }
+                            },
+                            onFailure = { error ->
+                                error?.let {
+                                    viewModelScope.launch {
+                                        snackbarController.showErrorSnackbar(
+                                            message = it
+                                        )
+                                    }
+                                }
+                            }
+                        )
+                    }
+                }
             }
 
             else -> Unit

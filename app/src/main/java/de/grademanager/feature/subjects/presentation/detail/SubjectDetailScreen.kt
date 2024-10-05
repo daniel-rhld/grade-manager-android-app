@@ -174,6 +174,7 @@ private fun SubjectDetailScreen(
             ) {
                 items(
                     items = uiState.grades,
+                    key = { it.id }
                 ) { grade ->
                     GradeComponent(
                         grade = grade,
@@ -192,7 +193,9 @@ private fun SubjectDetailScreen(
                             )
                         },
                         horizontalPadding = AppAssets.spacing.screenSpacing,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .animateItem()
                     )
                 }
             }

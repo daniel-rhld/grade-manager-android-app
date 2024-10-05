@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -18,12 +17,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.Dimension
+import androidx.navigation.compose.rememberNavController
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.NavGraphs
+import com.ramcosta.composedestinations.utils.currentDestinationAsState
+import com.ramcosta.composedestinations.utils.rememberDestinationsNavigator
 import de.grademanager.core.data.model.get
 import de.grademanager.core.presentation.snackbar.DismissibleSnackbar
-import de.grademanager.core.presentation.theme.AppAssets
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -37,6 +37,16 @@ fun AppHost() {
 
     val errorSnackbarData by viewModel.errorSnackbarData.collectAsState()
     val neutralSnackbarData by viewModel.neutralSnackbarData.collectAsState()
+
+    val currentDestination by rememberNavController().currentDestinationAsState()
+
+    LaunchedEffect(key1 = currentDestination) {
+        viewModel.clearErrorSnackbarData()
+        viewModel.clearNeutralSnackbarData()
+
+        errorSnackbarHostState.currentSnackbarData?.dismiss()
+        neutralSnackbarHostState.currentSnackbarData?.dismiss()
+    }
 
     LaunchedEffect(key1 = errorSnackbarData) {
         errorSnackbarData?.let { data ->
