@@ -30,4 +30,8 @@
     <string name="add_grade_dialog_hint_description">Description:</string>
     <string name="add_grade_dialog_hint_received_at">Received at:</string>
     <string name="add_grade_dialog_button_save">Save</string>
+
+    <string name="change_grade_ordering_dialog_title">Ordering</string>
+    <string name="change_grade_ordering_dialog_label_grade">Grade</string>
+    <string name="change_grade_ordering_dialog_label_received_at">Received at</string>
 </resources>

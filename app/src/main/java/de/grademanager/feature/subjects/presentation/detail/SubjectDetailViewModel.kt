@@ -12,7 +12,9 @@ import de.grademanager.core.presentation.snackbar.SnackbarController
 import de.grademanager.feature.grades.domain.use_case.CreateGradeUseCase
 import de.grademanager.feature.grades.domain.use_case.DeleteGradeUseCase
 import de.grademanager.feature.grades.domain.use_case.GetAllGradesForSubjectUseCase
+import de.grademanager.feature.grades.domain.use_case.GetGradeOrderingUseCase
 import de.grademanager.feature.grades.domain.use_case.RestoreGradeUseCase
+import de.grademanager.feature.grades.domain.use_case.UpdateGradeOrderingUseCase
 import de.grademanager.feature.grades.presentation.add_grade.AddGradeDialogUiEvent
 import de.grademanager.feature.grades.presentation.add_grade.AddGradeDialogUiState
 import de.grademanager.feature.subjects.domain.models.GradeOrdering
@@ -25,6 +27,9 @@ class SubjectDetailViewModel(
     private val createGradeUseCase: CreateGradeUseCase,
     private val deleteGradeUseCase: DeleteGradeUseCase,
     private val restoreGradeUseCase: RestoreGradeUseCase,
+
+    private val getGradeOrderingUseCase: GetGradeOrderingUseCase,
+    private val updateGradeOrderingUseCase: UpdateGradeOrderingUseCase,
 
     private val snackbarController: SnackbarController,
 
@@ -51,18 +56,23 @@ class SubjectDetailViewModel(
             buttonSaveEnabled = false
         )
     )
-
     val datePickerForNewGradeVisible = State(false)
+
+    val changeGradeOrderingDialogVisible = State(false)
 
     init {
         viewModelScope.launch {
-            getAllGradesForSubjectUseCase.invoke(
-                subjectId = navArgs.subjectId
-            ).collectLatest { grades ->
-                uiState.update {
-                    it.copy(
-                        grades = grades
-                    )
+            getGradeOrderingUseCase.invoke().collectLatest { gradeOrdering ->
+                getAllGradesForSubjectUseCase.invoke(
+                    subjectId = navArgs.subjectId,
+                    gradeOrdering = gradeOrdering
+                ).collectLatest { grades ->
+                    uiState.update {
+                        it.copy(
+                            grades = grades,
+                            gradeOrdering = gradeOrdering
+                        )
+                    }
                 }
             }
         }
@@ -120,6 +130,10 @@ class SubjectDetailViewModel(
                         )
                     }
                 }
+            }
+
+            is SubjectDetailUiEvent.ChangeGradeOrderingRequested -> {
+                changeGradeOrderingDialogVisible.update(true)
             }
 
             else -> Unit
@@ -213,6 +227,17 @@ class SubjectDetailViewModel(
 
     fun dismissDatePickerForNewGrade() {
         datePickerForNewGradeVisible.update(false)
+    }
+
+    fun changeGradeOrdering(value: GradeOrdering) {
+        viewModelScope.launch {
+            changeGradeOrderingDialogVisible.update(false)
+            updateGradeOrderingUseCase.invoke(value = value)
+        }
+    }
+
+    fun dismissChangeGradeOrderingDialog() {
+        changeGradeOrderingDialogVisible.update(false)
     }
 
 }

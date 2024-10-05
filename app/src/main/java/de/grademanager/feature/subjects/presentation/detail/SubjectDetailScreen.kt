@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.Sort
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material3.Button
@@ -19,6 +20,7 @@ import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SelectableDates
@@ -45,6 +47,7 @@ import de.grademanager.feature.subjects.domain.models.GradeOrdering
 import de.grademanager.feature.subjects.domain.models.SubjectMock
 import de.grademanager.feature.subjects.domain.models.calculateAverageGrade
 import de.grademanager.feature.subjects.presentation.detail.components.NoGradesIndicator
+import de.grademanager.feature.subjects.presentation.detail.dialogs.ChangeGradeOrderingDialog
 import org.koin.androidx.compose.koinViewModel
 import java.util.Calendar
 import java.util.Date
@@ -67,6 +70,8 @@ fun SubjectDetailScreen(
     val addGradeDialogVisible by viewModel.addGradeDialogVisible.collectAsState()
     val addGradeDialogUiState by viewModel.addGradeDialogUiState.collectAsState()
     val datePickerForNewGradeVisible by viewModel.datePickerForNewGradeVisible.collectAsState()
+
+    val changeGradeOrderingDialogVisible by viewModel.changeGradeOrderingDialogVisible.collectAsState()
 
     val datePickerForNewGradeState = rememberDatePickerState(
         selectableDates = object : SelectableDates {
@@ -123,6 +128,14 @@ fun SubjectDetailScreen(
         )
     }
 
+    if (changeGradeOrderingDialogVisible) {
+        ChangeGradeOrderingDialog(
+            currentOrdering = uiState.gradeOrdering,
+            onOrderingSelected = viewModel::changeGradeOrdering,
+            onDismissRequested = viewModel::dismissChangeGradeOrderingDialog
+        )
+    }
+
     SubjectDetailScreen(
         uiState = uiState,
         onUiEvent = { event ->
@@ -155,6 +168,22 @@ private fun SubjectDetailScreen(
                     onUiEvent.invoke(
                         SubjectDetailUiEvent.NavigationIconClick
                     )
+                },
+                actions = {
+                    if (uiState.grades.isNotEmpty()) {
+                        IconButton(
+                            onClick = {
+                                onUiEvent.invoke(
+                                    SubjectDetailUiEvent.ChangeGradeOrderingRequested
+                                )
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Rounded.Sort,
+                                contentDescription = null
+                            )
+                        }
+                    }
                 }
             )
         },

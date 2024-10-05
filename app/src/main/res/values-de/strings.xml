@@ -30,4 +30,8 @@
     <string name="add_grade_dialog_hint_description">Notizen:</string>
     <string name="add_grade_dialog_hint_received_at">Erhalten am</string>
     <string name="add_grade_dialog_button_save">Speichern</string>
+
+    <string name="change_grade_ordering_dialog_title">Sortierung</string>
+    <string name="change_grade_ordering_dialog_label_grade">Note</string>
+    <string name="change_grade_ordering_dialog_label_received_at">Erhalten am</string>
 </resources>

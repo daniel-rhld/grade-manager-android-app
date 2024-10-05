@@ -154,7 +154,7 @@ fun GradeComponent(
                         text = SimpleDateFormat(
                             stringResource(R.string.date_format_short),
                             Locale.getDefault()
-                        ).format(grade.createdAt),
+                        ).format(grade.receivedAt),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold
                     )

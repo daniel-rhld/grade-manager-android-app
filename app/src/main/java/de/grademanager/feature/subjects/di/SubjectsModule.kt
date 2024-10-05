@@ -57,6 +57,8 @@ val SubjectsModule = module {
             createGradeUseCase = get(),
             deleteGradeUseCase = get(),
             restoreGradeUseCase = get(),
+            getGradeOrderingUseCase = get(),
+            updateGradeOrderingUseCase = get(),
             snackbarController = get(),
             savedStateHandle = get()
         )

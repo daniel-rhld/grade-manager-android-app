@@ -5,6 +5,7 @@ import de.grademanager.feature.grades.domain.models.Grade
 sealed class SubjectDetailUiEvent {
 
     data object NavigationIconClick : SubjectDetailUiEvent()
+    data object ChangeGradeOrderingRequested : SubjectDetailUiEvent()
 
     data object ButtonAddFirstGradeClick : SubjectDetailUiEvent()
     data object ButtonAddGradeClick : SubjectDetailUiEvent()

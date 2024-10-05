@@ -9,7 +9,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface GradeDao {
 
-    @Query("SELECT * FROM grades g WHERE g.subject_id = :subjectId AND g.deleted_at IS NULL")
+    @Query("""
+        SELECT * FROM grades g WHERE g.subject_id = :subjectId AND g.deleted_at IS NULL
+    """)
     fun getAllGradesForSubject(subjectId: Int): Flow<List<GradeEntity>>
 
     @Upsert
