@@ -231,7 +231,6 @@ class SubjectDetailViewModel(
 
     fun changeGradeOrdering(value: GradeOrdering) {
         viewModelScope.launch {
-            changeGradeOrderingDialogVisible.update(false)
             updateGradeOrderingUseCase.invoke(value = value)
         }
     }

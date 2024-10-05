@@ -128,7 +128,7 @@ private fun GradeOrderingItemComponent(
 
     Surface(
         onClick = onClick,
-        color = if (active) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surface,
+        color = if (active) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceContainerLow,
         modifier = modifier,
     ) {
         Row(
@@ -181,7 +181,7 @@ private fun GradeOrderingItemComponent(
 private fun PreviewGradeOrderingItemComponent() {
     GradeManagerTheme {
         Surface(
-            color = MaterialTheme.colorScheme.background
+            color = MaterialTheme.colorScheme.surfaceContainerLow
         ) {
             ChangeGradeOrderingDialogContent(
                 currentOrdering = GradeOrdering.Value(ascending = true),
