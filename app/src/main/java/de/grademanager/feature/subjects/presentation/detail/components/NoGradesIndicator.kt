@@ -1,4 +1,4 @@
-package de.grademanager.feature.subjects.presentation.overview.components
+package de.grademanager.feature.subjects.presentation.detail.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -28,8 +28,8 @@ import de.grademanager.core.presentation.theme.AppAssets
 import de.grademanager.core.presentation.theme.GradeManagerTheme
 
 @Composable
-fun NoSubjectsIndicator(
-    onButtonCreateFirstSubjectClick: () -> Unit,
+fun NoGradesIndicator(
+    onButtonCreateFirstGradeClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -43,7 +43,7 @@ fun NoSubjectsIndicator(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = stringResource(R.string.subjects_overview_no_subjects_created_label),
+                text = stringResource(R.string.subject_detail_no_grades_created_label),
                 fontSize = 15.sp,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
@@ -54,7 +54,7 @@ fun NoSubjectsIndicator(
             )
 
             Button(
-                onClick = onButtonCreateFirstSubjectClick
+                onClick = onButtonCreateFirstGradeClick
             ) {
                 Icon(
                     imageVector = Icons.Rounded.Add,
@@ -66,7 +66,7 @@ fun NoSubjectsIndicator(
                 )
 
                 Text(
-                    text = stringResource(R.string.subjects_overview_button_create_first_subjects)
+                    text = stringResource(R.string.subject_detail_button_create_first_grade)
                 )
             }
         }
@@ -75,13 +75,13 @@ fun NoSubjectsIndicator(
 
 @PreviewLightDark
 @Composable
-private fun PreviewNoSubjectsIndicator() {
+private fun PreviewNoGradesIndicator() {
     GradeManagerTheme {
         Surface(
             color = MaterialTheme.colorScheme.background
         ) {
-            NoSubjectsIndicator(
-                onButtonCreateFirstSubjectClick = {},
+            NoGradesIndicator(
+                onButtonCreateFirstGradeClick = {},
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(all = 16.dp)

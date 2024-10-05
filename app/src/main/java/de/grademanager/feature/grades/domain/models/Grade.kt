@@ -7,6 +7,7 @@ data class Grade(
     val grade: Double,
     val weighting: Double,
     val description: String?,
+    val receivedAt: Date,
     val createdAt: Date,
     val updatedAt: Date?,
     val deletedAt: Date?

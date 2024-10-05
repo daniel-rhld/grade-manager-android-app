@@ -12,6 +12,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.Dp
 import com.example.compose.backgroundDark
 import com.example.compose.backgroundDarkHighContrast
 import com.example.compose.backgroundDarkMediumContrast
@@ -225,6 +226,7 @@ import com.example.compose.tertiaryLightMediumContrast
 import de.grademanager.core.presentation.theme.custom.colors.AppColors
 import de.grademanager.core.presentation.theme.custom.colors.darkColorScheme
 import de.grademanager.core.presentation.theme.custom.colors.lightColorScheme
+import de.grademanager.core.presentation.theme.custom.dimens.Sizes
 import de.grademanager.core.presentation.theme.custom.dimens.Spacing
 import de.grademanager.core.presentation.theme.custom.dimens.phone
 
@@ -456,24 +458,29 @@ private val highContrastDarkColorScheme = darkColorScheme(
     surfaceContainerHighest = surfaceContainerHighestDarkHighContrast,
 )
 
-internal val LocalSpacing = staticCompositionLocalOf<Spacing> { error("No Spacing provided") }
 internal val LocalAppColors = staticCompositionLocalOf<AppColors> { error("No AppColors provided") }
+internal val LocalSpacing = staticCompositionLocalOf<Spacing> { error("No Spacing provided") }
+internal val LocalSizes = staticCompositionLocalOf<Sizes> { error("No sizes provided") }
 
 @Composable
 fun AppAssets(
     appColors: AppColors,
     spacing: Spacing,
+    sizes: Sizes,
     content: @Composable () -> Unit
 ) {
     val appColorValues = remember { appColors }
     val spacingValues = remember { spacing }
+    val sizeValues = remember { sizes }
 
     appColorValues.update(appColors)
     spacingValues.update(spacing)
+    sizeValues.update(sizes)
 
     CompositionLocalProvider(
-        LocalAppColors provides appColors,
-        LocalSpacing provides spacing,
+        LocalAppColors provides appColorValues,
+        LocalSpacing provides spacingValues,
+        LocalSizes provides sizeValues
     ) {
         content.invoke()
     }
@@ -488,6 +495,14 @@ object AppAssets {
     val spacing: Spacing
         @Composable
         get() = LocalSpacing.current
+
+    val sizes: Sizes
+        @Composable
+        get() = LocalSizes.current
+
+    val scaffoldWithFabBottomPadding: Dp
+        @Composable
+        get() = spacing.screenSpacing + sizes.fabSize + spacing.verticalItemSpacing / 2
 
 }
 
@@ -509,6 +524,7 @@ fun GradeManagerTheme(
     AppAssets(
         appColors = if (darkTheme) AppColors.darkColorScheme else AppColors.lightColorScheme,
         spacing = Spacing.phone,
+        sizes = Sizes.phone,
         content = {
             MaterialTheme(
                 colorScheme = colorScheme,

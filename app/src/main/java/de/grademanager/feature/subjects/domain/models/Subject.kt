@@ -1,6 +1,5 @@
 package de.grademanager.feature.subjects.domain.models
 
-import com.example.compose.inverseOnSurfaceDarkMediumContrast
 import de.grademanager.feature.grades.domain.models.Grade
 import de.grademanager.feature.subjects.data.model.entity.SubjectEntity
 import java.util.Date
@@ -24,11 +23,18 @@ fun Subject.mapToEntity() = SubjectEntity(
     deletedAt = deletedAt
 )
 
+/**
+ * Calculates the average grade of a subject using the weighted arithmetic mean
+ */
 fun Subject.calculateAverageGrade(): Double {
-    return grades.sumOf { it.grade * it.weighting } / max(
-        a = grades.sumOf { it.weighting },
-        b = 1.0
-    )
+    return grades
+        .filter { it.deletedAt == null }
+        .sumOf { it.grade * it.weighting }.div(
+            other = max(
+                a = grades.sumOf { it.weighting },
+                b = 1.0
+            )
+        )
 }
 
 fun Subject.hasAnyGrades() = grades.isNotEmpty()
@@ -44,7 +50,8 @@ val SubjectMock = Subject(
             id = 1,
             grade = 2.0,
             weighting = 1.0,
-            description = null,
+            description = "Große Mathematik-Arbeit",
+            receivedAt = Date(),
             createdAt = Date(),
             updatedAt = null,
             deletedAt = null
@@ -54,6 +61,7 @@ val SubjectMock = Subject(
             grade = 3.2,
             weighting = 1.33,
             description = null,
+            receivedAt = Date(),
             createdAt = Date(),
             updatedAt = null,
             deletedAt = null
@@ -63,6 +71,7 @@ val SubjectMock = Subject(
             grade = 4.5,
             weighting = 1.5,
             description = null,
+            receivedAt = Date(),
             createdAt = Date(),
             updatedAt = null,
             deletedAt = null

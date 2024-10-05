@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -19,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
+import com.ramcosta.composedestinations.generated.destinations.SubjectDetailScreenDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import de.grademanager.R
 import de.grademanager.core.presentation.components.DefaultTopAppBar
@@ -69,7 +71,12 @@ fun SubjectsOverviewScreen(
         onUiEvent = { event ->
             when (event) {
                 is SubjectOverviewUiEvent.SubjectClick -> {
-                    // TODO: Navigate to subject
+                    navigator.navigate(
+                        SubjectDetailScreenDestination.invoke(
+                            subjectId = event.subject.id,
+                            subjectName = event.subject.name
+                        )
+                    )
                 }
 
                 is SubjectOverviewUiEvent.SubjectLongClick -> {
@@ -95,32 +102,37 @@ fun SubjectsOverviewScreen(
     Scaffold(
         topBar = {
             DefaultTopAppBar(
-                title = stringResource(R.string.subjects_overview_toolbar_title),
-                actions = {
-                    if (uiState.subjects.isNotEmpty()) {
-                        IconButton(
-                            onClick = {
-                                onUiEvent.invoke(
-                                    SubjectOverviewUiEvent.ButtonCreateFirstSubjectClick
-                                )
-                            }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Rounded.Add,
-                                contentDescription = null
-                            )
-                        }
-                    }
-                }
+                title = stringResource(R.string.subjects_overview_toolbar_title)
             )
         },
+        floatingActionButton = {
+            if (uiState.subjects.isNotEmpty()) {
+                FloatingActionButton(
+                    onClick = {
+                        onUiEvent.invoke(
+                            SubjectOverviewUiEvent.ButtonCreateFirstSubjectClick
+                        )
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.Add,
+                        contentDescription = null
+                    )
+                }
+            }
+        }
     ) { padding ->
         if (uiState.subjects.isNotEmpty()) {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(padding),
-                contentPadding = PaddingValues(AppAssets.spacing.screenSpacing),
+                contentPadding = PaddingValues(
+                    top = AppAssets.spacing.screenSpacing,
+                    end = AppAssets.spacing.screenSpacing,
+                    start = AppAssets.spacing.screenSpacing,
+                    bottom = AppAssets.scaffoldWithFabBottomPadding
+                ),
                 verticalArrangement = Arrangement.spacedBy(AppAssets.spacing.verticalItemSpacing)
             ) {
                 items(

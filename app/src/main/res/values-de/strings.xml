@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="date_format_short">dd.MM.yyyy</string>
+
     <string name="subjects_overview_toolbar_title">Fächer</string>
     <string name="subjects_overview_no_subjects_created_label">Aktuell hast du noch keine Fächer angelegt</string>
     <string name="subjects_overview_button_create_first_subjects">Erstelle dein erstes Fach</string>
@@ -11,4 +13,8 @@
     <string name="manage_subject_dialog_error_no_name">Bitte gib den Namen des Faches an</string>
     <string name="manage_subject_dialog_error_subject_not_found">Dieses Fach wurde nicht gefunden</string>
     <string name="manage_subject_dialog_error_subject_with_same_name_already_exists">Es existiert bereits ein Fach mit diesem Namen</string>
+
+    <string name="subject_detail_no_grades_created_label">Aktuell hast du noch keine Noten in diesem Fach angelegt</string>
+    <string name="subject_detail_button_create_first_grade">Erstelle dein erste Note</string>
+    <string name="subject_detail_grade_label_no_description">Ohne Beschreibung</string>
 </resources>

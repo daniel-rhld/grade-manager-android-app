@@ -1,9 +1,7 @@
 package de.grademanager.feature.subjects.presentation.overview
 
-import android.provider.ContactsContract.Data
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.grademanager.core.data.model.DataResult
 import de.grademanager.core.data.model.State
 import de.grademanager.core.data.model.fold
 import de.grademanager.feature.subjects.domain.models.Subject
@@ -30,7 +28,6 @@ class SubjectsOverviewViewModel(
     )
 
     val createSubjectDialogVisible = State(false)
-    private val createSubjectDialogName = State("")
     val createSubjectDialogUiState = State(
         ManageSubjectDialogUiState(
             name = "",
@@ -40,7 +37,6 @@ class SubjectsOverviewViewModel(
     )
 
     val updateSubjectDialogVisible = State(false)
-    private val updateSubjectDialogName = State("")
     val updateSubjectDialogUiState = State(
         ManageSubjectDialogUiState(
             name = "",
@@ -65,22 +61,22 @@ class SubjectsOverviewViewModel(
         }
 
         viewModelScope.launch {
-            createSubjectDialogName.collectLatest { subjectName ->
+            createSubjectDialogUiState.collectLatest { uiState ->
                 createSubjectDialogUiState.update {
                     it.copy(
-                        name = subjectName,
-                        buttonSaveEnabled = subjectName.isNotBlank()
+                        name = uiState.name,
+                        buttonSaveEnabled = uiState.name.isNotBlank()
                     )
                 }
             }
         }
 
         viewModelScope.launch {
-            combine(subjectToEdit.state, updateSubjectDialogName.state) { subject, subjectName ->
+            combine(subjectToEdit.state, updateSubjectDialogUiState.state) { subjectToEdit, subject ->
                 updateSubjectDialogUiState.update {
                     it.copy(
-                        name = subjectName,
-                        buttonSaveEnabled = subjectName.isNotBlank() && subjectName.trim() != subject?.name?.trim()
+                        name = subject.name,
+                        buttonSaveEnabled = subject.name.isNotBlank() && subject.name.trim() != subjectToEdit?.name?.trim()
                     )
                 }
             }.collect()
@@ -96,8 +92,12 @@ class SubjectsOverviewViewModel(
 
             is SubjectOverviewUiEvent.SubjectLongClick -> {
                 subjectToEdit.update(event.subject)
-                updateSubjectDialogName.update(event.subject.name)
                 updateSubjectDialogVisible.update(true)
+                updateSubjectDialogUiState.update {
+                    it.copy(
+                        name = event.subject.name,
+                    )
+                }
             }
 
             else -> Unit
@@ -108,10 +108,19 @@ class SubjectsOverviewViewModel(
         when (event) {
             is ManageSubjectDialogUiEvent.DismissRequested -> {
                 createSubjectDialogVisible.update(false)
+                createSubjectDialogUiState.update {
+                    it.copy(
+                        nameError = null
+                    )
+                }
             }
 
             is ManageSubjectDialogUiEvent.NameChange -> {
-                createSubjectDialogName.update(event.value)
+                createSubjectDialogUiState.update {
+                    it.copy(
+                        name = event.value
+                    )
+                }
             }
 
             is ManageSubjectDialogUiEvent.ButtonSaveClick -> {
@@ -121,10 +130,10 @@ class SubjectsOverviewViewModel(
                     ).let { result ->
                         result.fold(
                             onSuccess = {
-                                createSubjectDialogName.update("")
                                 createSubjectDialogVisible.update(false)
                                 createSubjectDialogUiState.update {
                                     it.copy(
+                                        name = "",
                                         nameError = null
                                     )
                                 }
@@ -147,10 +156,19 @@ class SubjectsOverviewViewModel(
         when (event) {
             is ManageSubjectDialogUiEvent.DismissRequested -> {
                 updateSubjectDialogVisible.update(false)
+                updateSubjectDialogUiState.update {
+                    it.copy(
+                        nameError = null
+                    )
+                }
             }
 
             is ManageSubjectDialogUiEvent.NameChange -> {
-                updateSubjectDialogName.update(event.value)
+                updateSubjectDialogUiState.update {
+                    it.copy(
+                        name = event.value
+                    )
+                }
             }
 
             is ManageSubjectDialogUiEvent.ButtonSaveClick -> {
@@ -165,10 +183,10 @@ class SubjectsOverviewViewModel(
                         ).let { result ->
                             result.fold(
                                 onSuccess = {
-                                    updateSubjectDialogName.update("")
                                     updateSubjectDialogVisible.update(false)
                                     updateSubjectDialogUiState.update {
                                         it.copy(
+                                            name = "",
                                             nameError = null
                                         )
                                     }

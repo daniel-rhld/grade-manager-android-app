@@ -24,6 +24,15 @@ android {
         ksp {
             arg("room.schemaLocation", "$projectDir/schemas")
         }
+
+        testInstrumentationRunner = "org.junit.runners.JUnit4"
+        testInstrumentationRunnerArguments["runnerBuilder"] = "de.mannodermaus.junit5.AndroidJUnit5Builder"
+    }
+
+    testOptions {
+        unitTests.all {
+            it.useJUnitPlatform()
+        }
     }
 
     buildTypes {
@@ -87,4 +96,7 @@ dependencies {
     implementation(libs.debugging.tooling)
     debugImplementation(libs.debugging.manifest)
     debugImplementation(libs.debugging.preview)
+
+    testImplementation(libs.test.junit5.core)
+    testRuntimeOnly(libs.test.junit5.engine)
 }

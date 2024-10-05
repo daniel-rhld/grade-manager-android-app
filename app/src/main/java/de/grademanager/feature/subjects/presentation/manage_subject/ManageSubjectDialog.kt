@@ -21,8 +21,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -33,6 +38,7 @@ import de.grademanager.core.data.model.StringWrapper
 import de.grademanager.core.data.model.get
 import de.grademanager.core.presentation.theme.AppAssets
 import de.grademanager.core.presentation.theme.GradeManagerTheme
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,6 +47,15 @@ fun ManageSubjectDialog(
     uiState: ManageSubjectDialogUiState,
     onUiEvent: (ManageSubjectDialogUiEvent) -> Unit
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val nameFocusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(key1 = Unit) {
+        delay(200)
+        nameFocusRequester.requestFocus()
+        keyboardController?.show()
+    }
+
     ModalBottomSheet(
         onDismissRequest = {
             onUiEvent.invoke(
@@ -51,7 +66,8 @@ fun ManageSubjectDialog(
         ManageSubjectDialogContent(
             mode = mode,
             uiState = uiState,
-            onUiEvent = onUiEvent
+            onUiEvent = onUiEvent,
+            nameFocusRequester = nameFocusRequester
         )
     }
 }
@@ -60,7 +76,8 @@ fun ManageSubjectDialog(
 fun ManageSubjectDialogContent(
     mode: ManageSubjectMode,
     uiState: ManageSubjectDialogUiState,
-    onUiEvent: (ManageSubjectDialogUiEvent) -> Unit
+    onUiEvent: (ManageSubjectDialogUiEvent) -> Unit,
+    nameFocusRequester: FocusRequester = remember { FocusRequester() }
 ) {
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -95,13 +112,16 @@ fun ManageSubjectDialogContent(
             shape = RoundedCornerShape(size = 12.dp),
             placeholder = {
                 Text(
-                    text = stringResource(R.string.manage_subject_dialog_name_hint)
+                    text = stringResource(R.string.manage_subject_dialog_name_hint),
                 )
             },
             isError = uiState.nameError != null,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = AppAssets.spacing.bottomDialogContentSpacing)
+                .focusRequester(
+                    focusRequester = nameFocusRequester
+                )
         )
 
         AnimatedVisibility(

@@ -12,6 +12,7 @@ android-gradle-plugin = "8.5.2"
 ksp = "2.0.10-1.0.24"
 multidex = "2.0.1"
 koin = "3.5.3"
+junit5 = "5.7.2"
 
 [libraries]
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref="androidx-core" }
@@ -47,6 +48,9 @@ koin-core = { group = "io.insert-koin", name = "koin-androidx-compose", version.
 debugging-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 debugging-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 debugging-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+
+test-junit5-core = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit5" }
+test-junit5-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref="junit5" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }

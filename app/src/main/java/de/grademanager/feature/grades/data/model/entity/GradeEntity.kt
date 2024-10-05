@@ -24,6 +24,9 @@ data class GradeEntity(
     @ColumnInfo(name = "subject_id")
     val subjectId: Int,
 
+    @ColumnInfo(name = "received_at")
+    val receivedAt: Date,
+
     @ColumnInfo(name = "created_at")
     val createdAt: Date,
 
@@ -39,6 +42,7 @@ fun GradeEntity.mapToDomainObject() = Grade(
     grade = grade,
     weighting = weighting,
     description = description,
+    receivedAt = receivedAt,
     createdAt = createdAt,
     updatedAt = updatedAt,
     deletedAt = deletedAt
