@@ -48,15 +48,6 @@ fun ManageSubjectDialog(
     uiState: ManageSubjectDialogUiState,
     onUiEvent: (ManageSubjectDialogUiEvent) -> Unit
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
-    val nameFocusRequester = remember { FocusRequester() }
-
-    LaunchedEffect(key1 = Unit) {
-        delay(200)
-        nameFocusRequester.requestFocus()
-        keyboardController?.show()
-    }
-
     ModalBottomSheet(
         onDismissRequest = {
             onUiEvent.invoke(
@@ -67,8 +58,7 @@ fun ManageSubjectDialog(
         ManageSubjectDialogContent(
             mode = mode,
             uiState = uiState,
-            onUiEvent = onUiEvent,
-            nameFocusRequester = nameFocusRequester
+            onUiEvent = onUiEvent
         )
     }
 }
@@ -77,8 +67,7 @@ fun ManageSubjectDialog(
 fun ManageSubjectDialogContent(
     mode: ManageSubjectMode,
     uiState: ManageSubjectDialogUiState,
-    onUiEvent: (ManageSubjectDialogUiEvent) -> Unit,
-    nameFocusRequester: FocusRequester = remember { FocusRequester() }
+    onUiEvent: (ManageSubjectDialogUiEvent) -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -126,9 +115,6 @@ fun ManageSubjectDialogContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = AppAssets.spacing.bottomDialogContentSpacing)
-                .focusRequester(
-                    focusRequester = nameFocusRequester
-                )
         )
 
         AnimatedVisibility(

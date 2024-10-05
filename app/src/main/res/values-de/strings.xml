@@ -7,6 +7,7 @@
     <string name="subjects_overview_toolbar_title">Fächer</string>
     <string name="subjects_overview_no_subjects_created_label">Aktuell hast du noch keine Fächer angelegt</string>
     <string name="subjects_overview_button_create_first_subjects">Erstelle dein erstes Fach</string>
+    <string name="subjects_overview_grade_average_label">Gesamtdurchschnitt:</string>
 
     <string name="manage_subject_dialog_create_title">Fach erstellen</string>
     <string name="manage_subject_dialog_update_title">Fach bearbeiten</string>
@@ -19,9 +20,9 @@
     <string name="subject_detail_no_grades_created_label">Aktuell hast du noch keine Noten in diesem Fach angelegt</string>
     <string name="subject_detail_button_create_first_grade">Erstelle dein erste Note</string>
     <string name="subject_detail_grade_label_no_description">Ohne Beschreibung</string>
-
     <string name="subject_detail_grade_deleted">Note wurde gelöscht</string>
     <string name="subject_detail_grade_deleted_revert">Rückgängig</string>
+    <string name="subjects_detail_grade_average_label">Durchschnitt:</string>
 
     <string name="add_grade_dialog_title">Note hinzufügen</string>
     <string name="add_grade_dialog_hint_grade">Deine Note:</string>

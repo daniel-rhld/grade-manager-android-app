@@ -1,8 +1,10 @@
 package de.grademanager.feature.subjects.presentation.detail
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -17,6 +19,7 @@ import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
@@ -25,15 +28,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import de.grademanager.R
+import de.grademanager.core.presentation.components.BottomGradeAverageComponent
 import de.grademanager.core.presentation.components.DefaultTopAppBar
+import de.grademanager.core.presentation.effects.setNavigationBarColor
 import de.grademanager.core.presentation.theme.AppAssets
+import de.grademanager.core.presentation.theme.GradeManagerTheme
 import de.grademanager.feature.grades.presentation.add_grade.AddGradeDialog
 import de.grademanager.feature.grades.presentation.components.GradeComponent
+import de.grademanager.feature.subjects.domain.models.GradeOrdering
+import de.grademanager.feature.subjects.domain.models.SubjectMock
+import de.grademanager.feature.subjects.domain.models.calculateAverageGrade
 import de.grademanager.feature.subjects.presentation.detail.components.NoGradesIndicator
 import org.koin.androidx.compose.koinViewModel
 import java.util.Calendar
@@ -47,6 +57,10 @@ fun SubjectDetailScreen(
     subjectName: String,
     navigator: DestinationsNavigator
 ) {
+    setNavigationBarColor(
+        color = MaterialTheme.colorScheme.secondaryContainer
+    )
+
     val viewModel: SubjectDetailViewModel = koinViewModel()
     val uiState by viewModel.uiState.collectAsState()
 
@@ -151,7 +165,8 @@ private fun SubjectDetailScreen(
                         onUiEvent.invoke(
                             SubjectDetailUiEvent.ButtonAddGradeClick
                         )
-                    }
+                    },
+                    modifier = Modifier.padding(bottom = AppAssets.sizes.bottomGradeAverageComponentHeight)
                 ) {
                     Icon(
                         imageVector = Icons.Rounded.Add,
@@ -162,42 +177,53 @@ private fun SubjectDetailScreen(
         }
     ) { padding ->
         if (uiState.grades.isNotEmpty()) {
-            LazyColumn(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(padding),
-                contentPadding = PaddingValues(
-                    top = AppAssets.spacing.screenSpacing,
-                    bottom = AppAssets.scaffoldWithFabBottomPadding
-                ),
-                verticalArrangement = Arrangement.spacedBy(AppAssets.spacing.verticalItemSpacing)
+                    .fillMaxSize()
+                    .padding(padding)
             ) {
-                items(
-                    items = uiState.grades,
-                    key = { it.id }
-                ) { grade ->
-                    GradeComponent(
-                        grade = grade,
-                        onClick = {
-                            onUiEvent.invoke(
-                                SubjectDetailUiEvent.GradeClick(
-                                    grade = grade
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1F),
+                    contentPadding = PaddingValues(
+                        top = AppAssets.spacing.screenSpacing,
+                        bottom = AppAssets.scaffoldWithFabBottomPadding
+                    ),
+                    verticalArrangement = Arrangement.spacedBy(AppAssets.spacing.verticalItemSpacing)
+                ) {
+                    items(
+                        items = uiState.grades,
+                        key = { it.id }
+                    ) { grade ->
+                        GradeComponent(
+                            grade = grade,
+                            onClick = {
+                                onUiEvent.invoke(
+                                    SubjectDetailUiEvent.GradeClick(
+                                        grade = grade
+                                    )
                                 )
-                            )
-                        },
-                        onDeleteRequested = {
-                            onUiEvent.invoke(
-                                SubjectDetailUiEvent.GradeDeleteRequested(
-                                    grade = grade
+                            },
+                            onDeleteRequested = {
+                                onUiEvent.invoke(
+                                    SubjectDetailUiEvent.GradeDeleteRequested(
+                                        grade = grade
+                                    )
                                 )
-                            )
-                        },
-                        horizontalPadding = AppAssets.spacing.screenSpacing,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .animateItem()
-                    )
+                            },
+                            horizontalPadding = AppAssets.spacing.screenSpacing,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .animateItem()
+                        )
+                    }
                 }
+
+                BottomGradeAverageComponent(
+                    label = stringResource(R.string.subjects_detail_grade_average_label),
+                    grade = uiState.grades.calculateAverageGrade()
+                )
             }
         } else {
             NoGradesIndicator(
@@ -212,5 +238,20 @@ private fun SubjectDetailScreen(
                     .padding(AppAssets.spacing.screenSpacing)
             )
         }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun PreviewSubjectDetailScreen() {
+    GradeManagerTheme {
+        SubjectDetailScreen(
+            uiState = SubjectDetailUiState(
+                subjectName = "Mathematik",
+                grades = SubjectMock.grades,
+                gradeOrdering = GradeOrdering.Value(ascending = true),
+            ),
+            onUiEvent = {}
+        )
     }
 }

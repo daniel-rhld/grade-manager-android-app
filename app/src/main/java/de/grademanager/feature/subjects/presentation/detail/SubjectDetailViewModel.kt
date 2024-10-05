@@ -1,6 +1,5 @@
 package de.grademanager.feature.subjects.presentation.detail
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -93,8 +92,6 @@ class SubjectDetailViewModel(
             }
 
             is SubjectDetailUiEvent.GradeDeleteRequested -> {
-                Log.i("GradeManager", "delete requested")
-
                 viewModelScope.launch {
                     deleteGradeUseCase.invoke(gradeId = event.grade.id).let { result ->
                         result.fold(

@@ -23,18 +23,25 @@ fun Subject.mapToEntity() = SubjectEntity(
     deletedAt = deletedAt
 )
 
+fun List<Grade>.calculateAverageGrade(): Double {
+    return this.filter { it.deletedAt == null }
+        .sumOf { it.grade * it.weighting }.div(
+            other = max(
+                a = this.sumOf { it.weighting },
+                b = 1.0
+            )
+        )
+}
+
 /**
  * Calculates the average grade of a subject using the weighted arithmetic mean
  */
 fun Subject.calculateAverageGrade(): Double {
-    return grades
-        .filter { it.deletedAt == null }
-        .sumOf { it.grade * it.weighting }.div(
-            other = max(
-                a = grades.sumOf { it.weighting },
-                b = 1.0
-            )
-        )
+    return grades.filter { it.deletedAt == null }.calculateAverageGrade()
+}
+
+fun List<Subject>.calculateTotalAverageGrade(): Double {
+    return sumOf { it.calculateAverageGrade() } / max(a = 1.0, b = size.toDouble())
 }
 
 fun Subject.hasAnyGrades() = grades.isNotEmpty()

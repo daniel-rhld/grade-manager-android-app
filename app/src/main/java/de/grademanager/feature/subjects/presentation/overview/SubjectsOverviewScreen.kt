@@ -1,7 +1,9 @@
 package de.grademanager.feature.subjects.presentation.overview
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -10,7 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,11 +25,14 @@ import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.SubjectDetailScreenDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import de.grademanager.R
+import de.grademanager.core.presentation.components.BottomGradeAverageComponent
 import de.grademanager.core.presentation.components.DefaultTopAppBar
+import de.grademanager.core.presentation.effects.setNavigationBarColor
 import de.grademanager.core.presentation.effects.vibrate
 import de.grademanager.core.presentation.theme.AppAssets
 import de.grademanager.core.presentation.theme.GradeManagerTheme
 import de.grademanager.feature.subjects.domain.models.SubjectMock
+import de.grademanager.feature.subjects.domain.models.calculateTotalAverageGrade
 import de.grademanager.feature.subjects.presentation.manage_subject.ManageSubjectDialog
 import de.grademanager.feature.subjects.presentation.manage_subject.ManageSubjectMode
 import de.grademanager.feature.subjects.presentation.overview.components.NoSubjectsIndicator
@@ -39,6 +44,10 @@ import org.koin.androidx.compose.koinViewModel
 fun SubjectsOverviewScreen(
     navigator: DestinationsNavigator
 ) {
+    setNavigationBarColor(
+        color = MaterialTheme.colorScheme.secondaryContainer
+    )
+
     val context = LocalContext.current
 
     val viewModel: SubjectsOverviewViewModel = koinViewModel()
@@ -112,7 +121,8 @@ fun SubjectsOverviewScreen(
                         onUiEvent.invoke(
                             SubjectOverviewUiEvent.ButtonCreateFirstSubjectClick
                         )
-                    }
+                    },
+                    modifier = Modifier.padding(bottom = AppAssets.sizes.bottomGradeAverageComponentHeight)
                 ) {
                     Icon(
                         imageVector = Icons.Rounded.Add,
@@ -123,35 +133,46 @@ fun SubjectsOverviewScreen(
         }
     ) { padding ->
         if (uiState.subjects.isNotEmpty()) {
-            LazyColumn(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(padding),
-                contentPadding = PaddingValues(
-                    top = AppAssets.spacing.screenSpacing,
-                    end = AppAssets.spacing.screenSpacing,
-                    start = AppAssets.spacing.screenSpacing,
-                    bottom = AppAssets.scaffoldWithFabBottomPadding
-                ),
-                verticalArrangement = Arrangement.spacedBy(AppAssets.spacing.verticalItemSpacing)
+                    .fillMaxSize()
+                    .padding(padding)
             ) {
-                items(
-                    items = uiState.subjects,
-                ) { subject ->
-                    SubjectComponent(
-                        subject = subject,
-                        onClick = {
-                            onUiEvent.invoke(
-                                SubjectOverviewUiEvent.SubjectClick(subject = subject)
-                            )
-                        },
-                        onLongClick = {
-                            onUiEvent.invoke(
-                                SubjectOverviewUiEvent.SubjectLongClick(subject = subject)
-                            )                        },
-                        modifier = Modifier.fillMaxWidth()
-                    )
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1F),
+                    contentPadding = PaddingValues(
+                        top = AppAssets.spacing.screenSpacing,
+                        end = AppAssets.spacing.screenSpacing,
+                        start = AppAssets.spacing.screenSpacing,
+                        bottom = AppAssets.scaffoldWithFabBottomPadding
+                    ),
+                    verticalArrangement = Arrangement.spacedBy(AppAssets.spacing.verticalItemSpacing)
+                ) {
+                    items(
+                        items = uiState.subjects,
+                    ) { subject ->
+                        SubjectComponent(
+                            subject = subject,
+                            onClick = {
+                                onUiEvent.invoke(
+                                    SubjectOverviewUiEvent.SubjectClick(subject = subject)
+                                )
+                            },
+                            onLongClick = {
+                                onUiEvent.invoke(
+                                    SubjectOverviewUiEvent.SubjectLongClick(subject = subject)
+                                )                        },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
                 }
+
+                BottomGradeAverageComponent(
+                    label = stringResource(R.string.subjects_overview_grade_average_label),
+                    grade = uiState.subjects.calculateTotalAverageGrade()
+                )
             }
         } else {
             NoSubjectsIndicator(
