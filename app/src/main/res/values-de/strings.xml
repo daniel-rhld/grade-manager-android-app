@@ -31,6 +31,11 @@
     <string name="add_grade_dialog_hint_received_at">Erhalten am</string>
     <string name="add_grade_dialog_button_save">Speichern</string>
 
+    <string name="add_grade_error_invalid_grade">Diese Note ist nicht gültig. Bitte gib eine Note zwischen 1,0 und 6,0 ein</string>
+    <string name="add_grade_error_invalid_weighting">Diese Gewichtung ist nicht gültig. Bitte gib eine Gewichtung zwischen 0,25 und 2,0 ein</string>
+    <string name="add_grade_error_invalid_received_at">Das "erhalten am"-Datum ist ungültig. Bitte gib ein Datum in der Vergangenheit ein.</string>
+    <string name="add_grade_error_subject_not_found">Dieses Fach wurde nicht gefunden</string>
+
     <string name="change_grade_ordering_dialog_title">Sortierung</string>
     <string name="change_grade_ordering_dialog_label_grade">Note</string>
     <string name="change_grade_ordering_dialog_label_received_at">Erhalten am</string>

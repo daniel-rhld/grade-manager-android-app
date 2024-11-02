@@ -31,8 +31,8 @@ import de.grademanager.core.presentation.effects.setNavigationBarColor
 import de.grademanager.core.presentation.effects.vibrate
 import de.grademanager.core.presentation.theme.AppAssets
 import de.grademanager.core.presentation.theme.GradeManagerTheme
-import de.grademanager.feature.subjects.domain.models.SubjectMock
-import de.grademanager.feature.subjects.domain.models.calculateTotalAverageGrade
+import de.grademanager.feature.subjects.domain.model.SubjectMock
+import de.grademanager.feature.subjects.domain.model.SubjectWitAverageGrade
 import de.grademanager.feature.subjects.presentation.manage_subject.ManageSubjectDialog
 import de.grademanager.feature.subjects.presentation.manage_subject.ManageSubjectMode
 import de.grademanager.feature.subjects.presentation.overview.components.NoSubjectsIndicator
@@ -152,18 +152,19 @@ fun SubjectsOverviewScreen(
                 ) {
                     items(
                         items = uiState.subjects,
-                        key = { it.id }
+                        key = { it.self.id }
                     ) { subject ->
                         SubjectComponent(
-                            subject = subject,
+                            subject = subject.self,
+                            averageGrade = subject.averageGrade,
                             onClick = {
                                 onUiEvent.invoke(
-                                    SubjectOverviewUiEvent.SubjectClick(subject = subject)
+                                    SubjectOverviewUiEvent.SubjectClick(subject = subject.self)
                                 )
                             },
                             onLongClick = {
                                 onUiEvent.invoke(
-                                    SubjectOverviewUiEvent.SubjectLongClick(subject = subject)
+                                    SubjectOverviewUiEvent.SubjectLongClick(subject = subject.self)
                                 )                        },
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -174,7 +175,7 @@ fun SubjectsOverviewScreen(
 
                 BottomGradeAverageComponent(
                     label = stringResource(R.string.subjects_overview_grade_average_label),
-                    grade = uiState.subjects.calculateTotalAverageGrade()
+                    grade = uiState.averageGrade
                 )
             }
         } else {
@@ -199,7 +200,13 @@ private fun PreviewSubjectsOverviewScreen() {
     GradeManagerTheme {
         SubjectsOverviewScreen(
             uiState = SubjectOverviewUiState(
-                subjects = listOf(SubjectMock)
+                subjects = listOf(
+                    SubjectWitAverageGrade(
+                        self = SubjectMock,
+                        averageGrade = 1.0
+                    )
+                ),
+                averageGrade = 1.0
             ),
             onUiEvent = {}
         )

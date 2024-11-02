@@ -31,6 +31,11 @@
     <string name="add_grade_dialog_hint_received_at">Received at:</string>
     <string name="add_grade_dialog_button_save">Save</string>
 
+    <string name="add_grade_error_invalid_grade">This grade is not valid. Please enter a grade between 1.0 and 6.0</string>
+    <string name="add_grade_error_invalid_weighting">This weighting is not valid. Please enter a weighting between 0.25 and 2.0</string>
+    <string name="add_grade_error_invalid_received_at">The date for the receive date is not valid. Please enter da date in the past.</string>
+    <string name="add_grade_error_subject_not_found">This subject was not found</string>
+
     <string name="change_grade_ordering_dialog_title">Ordering</string>
     <string name="change_grade_ordering_dialog_label_grade">Grade</string>
     <string name="change_grade_ordering_dialog_label_received_at">Received at</string>

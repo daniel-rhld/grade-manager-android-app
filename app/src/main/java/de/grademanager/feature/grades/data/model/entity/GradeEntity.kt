@@ -3,7 +3,7 @@ package de.grademanager.feature.grades.data.model.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import de.grademanager.feature.grades.domain.models.Grade
+import de.grademanager.feature.grades.domain.model.Grade
 import java.util.Date
 
 @Entity(tableName = "grades")

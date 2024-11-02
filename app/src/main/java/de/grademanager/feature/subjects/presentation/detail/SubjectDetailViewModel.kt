@@ -9,27 +9,32 @@ import de.grademanager.core.data.model.State
 import de.grademanager.core.data.model.asStringWrapper
 import de.grademanager.core.data.model.fold
 import de.grademanager.core.presentation.snackbar.SnackbarController
-import de.grademanager.feature.grades.domain.use_case.CreateGradeUseCase
-import de.grademanager.feature.grades.domain.use_case.DeleteGradeUseCase
-import de.grademanager.feature.grades.domain.use_case.GetAllGradesForSubjectUseCase
-import de.grademanager.feature.grades.domain.use_case.GetGradeOrderingUseCase
-import de.grademanager.feature.grades.domain.use_case.RestoreGradeUseCase
-import de.grademanager.feature.grades.domain.use_case.UpdateGradeOrderingUseCase
+import de.grademanager.feature.grades.domain.use_case.calculate_average_grade.CalculateAverageGradeUseCase
+import de.grademanager.feature.grades.domain.use_case.create_grade.CreateGradeUseCase
+import de.grademanager.feature.grades.domain.use_case.delete_grade.DeleteGradeUseCase
+import de.grademanager.feature.grades.domain.use_case.get_all_grades_for_subject.GetAllGradesForSubjectUseCase
+import de.grademanager.feature.grades.domain.use_case.get_all_grades_for_subject.GetAllGradesForSubjectUseCaseImpl
+import de.grademanager.feature.grades.domain.use_case.get_grade_ordering.GetGradeOrderingUseCase
+import de.grademanager.feature.grades.domain.use_case.restore_grade.RestoreGradeUseCase
+import de.grademanager.feature.grades.domain.use_case.update_grade_ordering.UpdateGradeOrderingUseCase
 import de.grademanager.feature.grades.presentation.add_grade.AddGradeDialogUiEvent
 import de.grademanager.feature.grades.presentation.add_grade.AddGradeDialogUiState
-import de.grademanager.feature.subjects.domain.models.GradeOrdering
+import de.grademanager.feature.subjects.domain.model.GradeOrdering
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.Date
 
 class SubjectDetailViewModel(
     private val getAllGradesForSubjectUseCase: GetAllGradesForSubjectUseCase,
+
     private val createGradeUseCase: CreateGradeUseCase,
     private val deleteGradeUseCase: DeleteGradeUseCase,
     private val restoreGradeUseCase: RestoreGradeUseCase,
 
     private val getGradeOrderingUseCase: GetGradeOrderingUseCase,
     private val updateGradeOrderingUseCase: UpdateGradeOrderingUseCase,
+
+    private val calculateAverageGradeUseCase: CalculateAverageGradeUseCase,
 
     private val snackbarController: SnackbarController,
 
@@ -42,6 +47,7 @@ class SubjectDetailViewModel(
         SubjectDetailUiState(
             subjectName = navArgs.subjectName,
             grades = emptyList(),
+            averageGrade = 1.0,
             gradeOrdering = GradeOrdering.Value(ascending = false)
         )
     )
@@ -70,6 +76,9 @@ class SubjectDetailViewModel(
                     uiState.update {
                         it.copy(
                             grades = grades,
+                            averageGrade = calculateAverageGradeUseCase.invoke(
+                                grades = grades
+                            ),
                             gradeOrdering = gradeOrdering
                         )
                     }

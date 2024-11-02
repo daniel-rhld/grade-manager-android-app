@@ -1,4 +1,4 @@
-package de.grademanager.feature.grades.domain.models
+package de.grademanager.feature.grades.domain.model
 
 import java.util.Date
 

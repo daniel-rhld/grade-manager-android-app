@@ -1,9 +1,9 @@
-package de.grademanager.feature.grades.data.repository
+package de.grademanager.feature.grades.domain.repository
 
 import de.grademanager.core.data.model.DataResult
 import de.grademanager.feature.grades.data.model.entity.GradeEntity
-import de.grademanager.feature.grades.domain.models.Grade
-import de.grademanager.feature.subjects.domain.models.GradeOrdering
+import de.grademanager.feature.grades.domain.model.Grade
+import de.grademanager.feature.subjects.domain.model.GradeOrdering
 import kotlinx.coroutines.flow.Flow
 
 interface GradeRepository {

@@ -12,6 +12,7 @@ import de.grademanager.core.domain.ext.toColorInt
 
 @Composable
 fun setNavigationBarColor(color: Color) {
+    /*
     val isDarkTheme = isSystemInDarkTheme()
     val context = LocalContext.current
 
@@ -29,4 +30,6 @@ fun setNavigationBarColor(color: Color) {
             }
         )
     }
+
+     */
 }

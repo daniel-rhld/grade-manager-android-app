@@ -1,18 +1,21 @@
-package de.grademanager.feature.grades.domain.use_case
+package de.grademanager.feature.grades.domain.use_case.create_grade
 
+import de.grademanager.R
 import de.grademanager.core.data.model.DataResult
 import de.grademanager.core.data.model.asStringWrapper
 import de.grademanager.feature.grades.data.model.entity.GradeEntity
-import de.grademanager.feature.grades.data.repository.GradeRepository
-import de.grademanager.feature.subjects.domain.use_cases.FindSubjectUseCase
+import de.grademanager.feature.grades.domain.repository.GradeRepository
+import de.grademanager.feature.subjects.domain.use_case.create_subject.CreateSubjectUseCase
+import de.grademanager.feature.subjects.domain.use_case.find_subject.FindSubjectUseCase
+import de.grademanager.feature.subjects.domain.use_case.find_subject.FindSubjectUseCaseImpl
 import java.util.Date
 
-class CreateGradeUseCase(
+class CreateGradeUseCaseImpl(
     private val gradeRepository: GradeRepository,
     private val findSubjectUseCase: FindSubjectUseCase
-) {
+) : CreateGradeUseCase {
 
-    suspend operator fun invoke(
+    override suspend operator fun invoke(
         grade: String,
         weighting: Double,
         description: String,
@@ -26,15 +29,21 @@ class CreateGradeUseCase(
         }
 
         if (gradeValue == null || gradeValue < 1.0 || gradeValue > 6.0) {
-            return DataResult.Failure(error = "invalid grade error msg".asStringWrapper())
+            return DataResult.Failure(
+                error = R.string.add_grade_error_invalid_grade.asStringWrapper()
+            )
         }
 
         if (weighting < 0.25 || weighting > 2.0) {
-            return DataResult.Failure(error = "invalid weighting error msg".asStringWrapper())
+            return DataResult.Failure(
+                error = R.string.add_grade_error_invalid_weighting.asStringWrapper()
+            )
         }
 
         if (receivedAt.after(Date())) {
-            return DataResult.Failure(error = "invalid received at error msg".asStringWrapper())
+            return DataResult.Failure(
+                error = R.string.add_grade_error_invalid_received_at.asStringWrapper()
+            )
         }
 
         findSubjectUseCase.invoke(
@@ -55,7 +64,9 @@ class CreateGradeUseCase(
                 }
 
                 is DataResult.Failure -> {
-                    return DataResult.Failure("subject not found error".asStringWrapper())
+                    return DataResult.Failure(
+                        error = R.string.add_grade_error_subject_not_found.asStringWrapper()
+                    )
                 }
             }
         }

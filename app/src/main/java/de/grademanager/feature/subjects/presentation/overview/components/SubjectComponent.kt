@@ -17,14 +17,14 @@ import de.grademanager.core.presentation.components.ClickableCard
 import de.grademanager.core.presentation.components.GradeBoxComponent
 import de.grademanager.core.presentation.theme.AppAssets
 import de.grademanager.core.presentation.theme.GradeManagerTheme
-import de.grademanager.feature.subjects.domain.models.Subject
-import de.grademanager.feature.subjects.domain.models.SubjectMock
-import de.grademanager.feature.subjects.domain.models.calculateAverageGrade
-import de.grademanager.feature.subjects.domain.models.hasAnyGrades
+import de.grademanager.feature.subjects.domain.model.Subject
+import de.grademanager.feature.subjects.domain.model.SubjectMock
+import de.grademanager.feature.subjects.domain.model.hasAnyGrades
 
 @Composable
 fun SubjectComponent(
     subject: Subject,
+    averageGrade: Double,
     onClick: () -> Unit,
     onLongClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -48,9 +48,7 @@ fun SubjectComponent(
             )
 
             if (subject.hasAnyGrades()) {
-                GradeBoxComponent(
-                    grade = subject.calculateAverageGrade()
-                )
+                GradeBoxComponent(grade = averageGrade)
             }
         }
     }
@@ -65,6 +63,7 @@ private fun PreviewSubjectComponent() {
         ) {
             SubjectComponent(
                 subject = SubjectMock,
+                averageGrade = 1.0,
                 onClick = {},
                 onLongClick = {},
                 modifier = Modifier

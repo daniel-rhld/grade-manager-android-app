@@ -43,9 +43,8 @@ import de.grademanager.core.presentation.theme.AppAssets
 import de.grademanager.core.presentation.theme.GradeManagerTheme
 import de.grademanager.feature.grades.presentation.add_grade.AddGradeDialog
 import de.grademanager.feature.grades.presentation.components.GradeComponent
-import de.grademanager.feature.subjects.domain.models.GradeOrdering
-import de.grademanager.feature.subjects.domain.models.SubjectMock
-import de.grademanager.feature.subjects.domain.models.calculateAverageGrade
+import de.grademanager.feature.subjects.domain.model.GradeOrdering
+import de.grademanager.feature.subjects.domain.model.SubjectMock
 import de.grademanager.feature.subjects.presentation.detail.components.NoGradesIndicator
 import de.grademanager.feature.subjects.presentation.detail.dialogs.ChangeGradeOrderingDialog
 import org.koin.androidx.compose.koinViewModel
@@ -251,7 +250,7 @@ private fun SubjectDetailScreen(
 
                 BottomGradeAverageComponent(
                     label = stringResource(R.string.subjects_detail_grade_average_label),
-                    grade = uiState.grades.calculateAverageGrade()
+                    grade = uiState.averageGrade
                 )
             }
         } else {
@@ -278,6 +277,7 @@ private fun PreviewSubjectDetailScreen() {
             uiState = SubjectDetailUiState(
                 subjectName = "Mathematik",
                 grades = SubjectMock.grades,
+                averageGrade = 1.0,
                 gradeOrdering = GradeOrdering.Value(ascending = true),
             ),
             onUiEvent = {}

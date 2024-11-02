@@ -29,9 +29,10 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.grademanager.R
+import de.grademanager.core.presentation.components.DefaultBottomSheet
 import de.grademanager.core.presentation.theme.AppAssets
 import de.grademanager.core.presentation.theme.GradeManagerTheme
-import de.grademanager.feature.subjects.domain.models.GradeOrdering
+import de.grademanager.feature.subjects.domain.model.GradeOrdering
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,7 +41,7 @@ fun ChangeGradeOrderingDialog(
     onOrderingSelected: (GradeOrdering) -> Unit,
     onDismissRequested: () -> Unit
 ) {
-    ModalBottomSheet(
+    DefaultBottomSheet(
         onDismissRequest = onDismissRequested
     ) {
         ChangeGradeOrderingDialogContent(

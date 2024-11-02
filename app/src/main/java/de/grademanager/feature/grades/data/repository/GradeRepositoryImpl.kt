@@ -7,8 +7,9 @@ import de.grademanager.feature.grades.data.model.entity.GradeEntity
 import de.grademanager.feature.grades.data.model.entity.mapToDomainObject
 import de.grademanager.feature.grades.data.model.local_settings.GradeOrderingSettingsLocal
 import de.grademanager.feature.grades.data.model.local_settings.mapToDomainObject
-import de.grademanager.feature.grades.domain.models.Grade
-import de.grademanager.feature.subjects.domain.models.GradeOrdering
+import de.grademanager.feature.grades.domain.model.Grade
+import de.grademanager.feature.grades.domain.repository.GradeRepository
+import de.grademanager.feature.subjects.domain.model.GradeOrdering
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

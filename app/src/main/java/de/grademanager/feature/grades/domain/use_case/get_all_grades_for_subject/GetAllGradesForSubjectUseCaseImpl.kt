@@ -1,16 +1,16 @@
-package de.grademanager.feature.grades.domain.use_case
+package de.grademanager.feature.grades.domain.use_case.get_all_grades_for_subject
 
-import de.grademanager.feature.grades.data.repository.GradeRepository
-import de.grademanager.feature.grades.domain.models.Grade
-import de.grademanager.feature.subjects.domain.models.GradeOrdering
+import de.grademanager.feature.grades.domain.repository.GradeRepository
+import de.grademanager.feature.grades.domain.model.Grade
+import de.grademanager.feature.subjects.domain.model.GradeOrdering
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class GetAllGradesForSubjectUseCase(
+class GetAllGradesForSubjectUseCaseImpl(
     private val gradeRepository: GradeRepository
-) {
+) : GetAllGradesForSubjectUseCase {
 
-    operator fun invoke(subjectId: Int, gradeOrdering: GradeOrdering): Flow<List<Grade>> {
+    override operator fun invoke(subjectId: Int, gradeOrdering: GradeOrdering): Flow<List<Grade>> {
         return gradeRepository.getAllGradesForSubject(
             subjectId = subjectId
         ).map { list ->

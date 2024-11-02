@@ -1,8 +1,8 @@
-package de.grademanager.feature.subjects.data.repository
+package de.grademanager.feature.subjects.domain.repository
 
 import de.grademanager.core.data.model.DataResult
 import de.grademanager.feature.subjects.data.model.entity.SubjectEntity
-import de.grademanager.feature.subjects.domain.models.Subject
+import de.grademanager.feature.subjects.domain.model.Subject
 import kotlinx.coroutines.flow.Flow
 
 interface SubjectRepository {

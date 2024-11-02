@@ -1,6 +1,6 @@
 package de.grademanager.feature.subjects.presentation.detail
 
-import de.grademanager.feature.grades.domain.models.Grade
+import de.grademanager.feature.grades.domain.model.Grade
 
 sealed class SubjectDetailUiEvent {
 

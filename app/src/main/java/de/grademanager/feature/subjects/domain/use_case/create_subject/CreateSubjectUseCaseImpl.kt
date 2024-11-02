@@ -1,18 +1,18 @@
-package de.grademanager.feature.subjects.domain.use_cases
+package de.grademanager.feature.subjects.domain.use_case.create_subject
 
 import de.grademanager.R
 import de.grademanager.core.data.model.DataResult
 import de.grademanager.core.data.model.StringWrapper
 import de.grademanager.core.data.model.asStringWrapper
 import de.grademanager.feature.subjects.data.model.entity.SubjectEntity
-import de.grademanager.feature.subjects.data.repository.SubjectRepository
+import de.grademanager.feature.subjects.domain.repository.SubjectRepository
 import java.util.Date
 
-class CreateSubjectUseCase(
+class CreateSubjectUseCaseImpl(
     private val subjectRepository: SubjectRepository
-) {
+) : CreateSubjectUseCase {
 
-    suspend operator fun invoke(name: String): DataResult<Unit> {
+    override suspend operator fun invoke(name: String): DataResult<Unit> {
         if (subjectRepository.doesSubjectAlreadyExist(name)) {
             return DataResult.Failure(
                 error = R.string.manage_subject_dialog_error_subject_with_same_name_already_exists.asStringWrapper()

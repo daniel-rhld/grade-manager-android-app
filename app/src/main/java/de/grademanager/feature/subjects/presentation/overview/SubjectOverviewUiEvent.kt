@@ -1,6 +1,6 @@
 package de.grademanager.feature.subjects.presentation.overview
 
-import de.grademanager.feature.subjects.domain.models.Subject
+import de.grademanager.feature.subjects.domain.model.Subject
 
 sealed class SubjectOverviewUiEvent {
     data object ButtonCreateFirstSubjectClick : SubjectOverviewUiEvent()

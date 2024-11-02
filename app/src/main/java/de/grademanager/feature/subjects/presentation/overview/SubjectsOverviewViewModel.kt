@@ -4,10 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.grademanager.core.data.model.State
 import de.grademanager.core.data.model.fold
-import de.grademanager.feature.subjects.domain.models.Subject
-import de.grademanager.feature.subjects.domain.use_cases.CreateSubjectUseCase
-import de.grademanager.feature.subjects.domain.use_cases.GetExistingSubjectsOrdered
-import de.grademanager.feature.subjects.domain.use_cases.UpdateSubjectUseCase
+import de.grademanager.feature.subjects.domain.model.Subject
+import de.grademanager.feature.subjects.domain.model.SubjectWitAverageGrade
+import de.grademanager.feature.subjects.domain.use_case.calculate_average_subject_grade.CalculateAverageSubjectGradeUseCase
+import de.grademanager.feature.subjects.domain.use_case.create_subject.CreateSubjectUseCase
+import de.grademanager.feature.subjects.domain.use_case.get_existing_subjects_ordered.GetExistingSubjectsOrderedUseCase
+import de.grademanager.feature.subjects.domain.use_case.update_subject.UpdateSubjectUseCase
 import de.grademanager.feature.subjects.presentation.manage_subject.ManageSubjectDialogUiEvent
 import de.grademanager.feature.subjects.presentation.manage_subject.ManageSubjectDialogUiState
 import kotlinx.coroutines.flow.collect
@@ -16,14 +18,18 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 class SubjectsOverviewViewModel(
-    private val getExistingSubjectsOrdered: GetExistingSubjectsOrdered,
+    private val getExistingSubjectsOrdered: GetExistingSubjectsOrderedUseCase,
+
     private val createSubjectUseCase: CreateSubjectUseCase,
-    private val updateSubjectUseCase: UpdateSubjectUseCase
+    private val updateSubjectUseCase: UpdateSubjectUseCase,
+
+    private val calculateAverageSubjectGradeUseCase: CalculateAverageSubjectGradeUseCase
 ) : ViewModel() {
 
     val uiState = State(
         SubjectOverviewUiState(
-            subjects = emptyList()
+            subjects = emptyList(),
+            averageGrade = 1.0
         )
     )
 
@@ -54,7 +60,17 @@ class SubjectsOverviewViewModel(
             ).collectLatest { subjects ->
                 uiState.update {
                     it.copy(
-                        subjects = subjects
+                        subjects = subjects.map { subject ->
+                            SubjectWitAverageGrade(
+                                self = subject,
+                                averageGrade = calculateAverageSubjectGradeUseCase.calculateAverageGrade(
+                                    subject = subject
+                                )
+                            )
+                        },
+                        averageGrade = calculateAverageSubjectGradeUseCase.calculateAverageGrade(
+                            subjects = subjects
+                        )
                     )
                 }
             }

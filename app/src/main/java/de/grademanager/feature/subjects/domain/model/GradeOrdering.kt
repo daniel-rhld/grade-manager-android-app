@@ -1,4 +1,4 @@
-package de.grademanager.feature.subjects.domain.models
+package de.grademanager.feature.subjects.domain.model
 
 sealed class GradeOrdering {
 

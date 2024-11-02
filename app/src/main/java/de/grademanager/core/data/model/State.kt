@@ -12,7 +12,7 @@ import kotlin.coroutines.EmptyCoroutineContext
 
 class State <T>(initial: T) {
 
-    val _state = MutableStateFlow(initial)
+    private val _state = MutableStateFlow(initial)
     val state = _state.asStateFlow()
 
     fun update(other: T) {
@@ -30,7 +30,7 @@ class State <T>(initial: T) {
     @Composable
     fun collectAsState(
         context: CoroutineContext = EmptyCoroutineContext
-    ): State<T> = _state.asStateFlow().collectAsState(context = context)
+    ): State<T> = state.collectAsState(context = context)
 
     fun currentValue(): T {
         return _state.value

@@ -2,7 +2,7 @@ package de.grademanager.feature.grades.data.model.local_settings
 
 import android.util.Log
 import androidx.datastore.core.Serializer
-import de.grademanager.feature.subjects.domain.models.GradeOrdering
+import de.grademanager.feature.subjects.domain.model.GradeOrdering
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import java.io.InputStream

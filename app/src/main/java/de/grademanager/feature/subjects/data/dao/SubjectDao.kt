@@ -2,6 +2,7 @@ package de.grademanager.feature.subjects.data.dao
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Upsert
 import de.grademanager.feature.subjects.data.model.entity.SubjectEntity
 import de.grademanager.feature.subjects.data.model.view.SubjectWithGrades
@@ -10,6 +11,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface SubjectDao {
 
+    @Transaction
     @Query("""
         SELECT s.* FROM subjects s WHERE s.deleted_at IS NULL ORDER BY
         CASE WHEN :orderAscending = 1 THEN :orderColumn END ASC,
@@ -23,6 +25,7 @@ interface SubjectDao {
     @Query("SELECT COUNT(*) FROM subjects s WHERE s.name = :name")
     suspend fun doesSubjectAlreadyExist(name: String): Int
 
+    @Transaction
     @Query("SELECT s.* FROM subjects s WHERE id = :id")
     suspend fun findById(id: Int): SubjectWithGrades?
 

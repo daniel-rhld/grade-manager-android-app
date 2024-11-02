@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.grademanager.R
 import de.grademanager.core.domain.ext.formatWeighting
+import de.grademanager.core.presentation.components.DefaultBottomSheet
 import de.grademanager.core.presentation.theme.AppAssets
 import de.grademanager.core.presentation.theme.GradeManagerTheme
 import de.grademanager.feature.grades.presentation.add_grade.components.GradeInputField
@@ -57,7 +58,7 @@ fun AddGradeDialog(
     uiState: AddGradeDialogUiState,
     onUiEvent: (AddGradeDialogUiEvent) -> Unit
 ) {
-    ModalBottomSheet(
+    DefaultBottomSheet(
         sheetState = rememberModalBottomSheetState(
             skipPartiallyExpanded = true
         ),
