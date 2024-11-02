@@ -17,12 +17,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        startKoin {
-            androidLogger()
-            androidContext(this@MainActivity)
-            modules(AppModule)
-        }
-
         setContent {
             GradeManagerTheme {
                 AppHost()

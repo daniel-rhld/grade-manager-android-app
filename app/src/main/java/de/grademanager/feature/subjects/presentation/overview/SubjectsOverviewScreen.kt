@@ -152,6 +152,7 @@ fun SubjectsOverviewScreen(
                 ) {
                     items(
                         items = uiState.subjects,
+                        key = { it.id }
                     ) { subject ->
                         SubjectComponent(
                             subject = subject,
@@ -164,7 +165,9 @@ fun SubjectsOverviewScreen(
                                 onUiEvent.invoke(
                                     SubjectOverviewUiEvent.SubjectLongClick(subject = subject)
                                 )                        },
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .animateItem()
                         )
                     }
                 }
