@@ -21,10 +21,6 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        ksp {
-            arg("room.schemaLocation", "$projectDir/schemas")
-        }
-
         testInstrumentationRunner = "org.junit.runners.JUnit4"
         testInstrumentationRunnerArguments["runnerBuilder"] = "de.mannodermaus.junit5.AndroidJUnit5Builder"
     }
@@ -38,10 +34,6 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
         }
     }
 
@@ -50,22 +42,22 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    buildFeatures {
-        compose = true
-        buildConfig = true
-    }
-
     kotlin {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_1_8)
         }
+    }
+
+    buildFeatures {
+        compose = true
+        buildConfig = true
     }
 }
 
 dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.activity)
-    implementation(libs.multidex)
+    //implementation(libs.multidex)
 
     implementation(libs.androidx.lifecycle.runtime)
     implementation(libs.androidx.lifecycle.viewmodel)
