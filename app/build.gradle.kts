@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
-    id("kotlin-parcelize")
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -15,8 +15,8 @@ android {
         applicationId = "de.grademanager"
 
         minSdk = 26
-        targetSdk = 34
-        compileSdk = 34
+        targetSdk = 35
+        compileSdk = 35
 
         versionCode = 1
         versionName = "1.0"
