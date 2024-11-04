@@ -36,6 +36,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
@@ -170,18 +171,10 @@ fun GradeComponent(
 
 @PreviewLightDark
 @Composable
-private fun PreviewGradeComponent() {
-    val grade = Grade(
-        id = 1,
-        grade = 1.0,
-        weighting = 1.0,
-        description = null,
-        receivedAt = Date(),
-        createdAt = Date(),
-        updatedAt = null,
-        deletedAt = null
-    )
-
+private fun PreviewGradeComponent(
+    @PreviewParameter(GradePreviewParameterProvider::class)
+    grade: Grade
+) {
     GradeManagerTheme {
         GradeManagerBackground {
             Spacer(

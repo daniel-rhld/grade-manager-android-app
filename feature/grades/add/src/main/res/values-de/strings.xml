@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_grades_add_title">Note hinzufügen</string>
+    <string name="feature_grades_add_hint_grade">Deine Note:</string>
+    <string name="feature_grades_add_hint_weighting">Gewichtung:</string>
+    <string name="feature_grades_add_hint_description">Notizen:</string>
+    <string name="feature_grades_add_hint_received_at">Erhalten am</string>
+    <string name="feature_grades_add_button_save">Speichern</string>
+</resources>

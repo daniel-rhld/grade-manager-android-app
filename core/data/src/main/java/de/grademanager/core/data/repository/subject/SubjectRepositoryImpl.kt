@@ -1,7 +1,7 @@
 package de.grademanager.core.data.repository.subject
 
-import de.grademanager.core.data.util.DataResult
-import de.grademanager.core.data.util.asStringWrapper
+import de.grademanager.common.util.DataResult
+import de.grademanager.common.util.asStringWrapper
 import de.grademanager.core.database.dao.SubjectDao
 import de.grademanager.core.database.model.subject.SubjectEntity
 import de.grademanager.core.database.model.subject.asExternalModel

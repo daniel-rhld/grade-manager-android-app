@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_subjects_detail_no_grades_created_label">Aktuell hast du noch keine Noten in diesem Fach angelegt</string>
+    <string name="feature_subjects_detail_button_create_first_grade">Erstelle dein erste Note</string>
+    <string name="feature_subjects_detail_grade_label_no_description">Ohne Beschreibung</string>
+    <string name="feature_subjects_detail_grade_deleted">Note wurde gelöscht</string>
+    <string name="feature_subjects_detail_grade_deleted_revert">Rückgängig</string>
+    <string name="feature_subjects_detail_grade_average_label">Durchschnitt:</string>
+
+    <string name="feature_subjects_detail_change_grade_ordering_dialog_title">Sortierung</string>
+    <string name="feature_subjects_detail_change_grade_ordering_dialog_label_grade">Note</string>
+    <string name="feature_subjects_detail_change_grade_ordering_dialog_label_received_at">Erhalten am</string>
+</resources>

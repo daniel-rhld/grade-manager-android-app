@@ -11,6 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.sp
 import de.grademanager.core.designsystem.components.GradeManagerBackground
 import de.grademanager.core.designsystem.components.GradeManagerCombinedClickableCard
@@ -55,27 +57,10 @@ fun SubjectComponent(
 
 @PreviewLightDark
 @Composable
-private fun PreviewSubjectComponent() {
-    val subject = Subject(
-        id = 1,
-        name = "Deutsch",
-        createdAt = Date(),
-        updatedAt = null,
-        deletedAt = null,
-        grades = listOf(
-            Grade(
-                id = 1,
-                grade = 1.0,
-                weighting = 1.0,
-                description = null,
-                receivedAt = Date(),
-                createdAt = Date(),
-                updatedAt = null,
-                deletedAt = null
-            )
-        )
-    )
-
+private fun PreviewSubjectComponent(
+    @PreviewParameter(SubjectPreviewParameterProvider::class)
+    subject: Subject
+) {
     GradeManagerTheme {
         GradeManagerBackground {
             Spacer(

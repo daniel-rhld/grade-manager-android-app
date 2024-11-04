@@ -8,8 +8,8 @@ lifecycle = "2.8.7"
 room = "2.6.1"
 datastore = "1.1.1"
 kotlin = "2.0.20"
-android-gradle-plugin = "8.5.2"
-androidTools = "31.6.1"
+android-gradle-plugin = "8.6.1"
+androidTools = "31.7.2"
 ksp = "2.0.20-1.0.25"
 multidex = "2.0.1"
 koin = "4.0.0"
@@ -20,7 +20,7 @@ espressoCore = "3.6.1"
 appcompat = "1.7.0"
 material = "1.12.0"
 jetbrainsKotlinJvm = "2.0.20"
-firebaseCrashlyticsPlugin = "2.9.9"
+firebaseCrashlyticsPlugin = "3.0.2"
 firebasePerfPlugin = "1.4.2"
 
 [libraries]
@@ -86,3 +86,18 @@ kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref =
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+
+room = { id = "androidx.room", version.ref = "room" }
+
+grademanager-android-application-compose = { id = "grademanager.android.application.compose" }
+grademanager-android-library-compose = { id = "grademanager.android.library.compose" }
+
+grademanager-android-application = { id = "grademanager.android.application" }
+grademanager-android-library = { id = "grademanager.android.library" }
+grademanager-jvm-library = { id = "grademanager.jvm.library" }
+
+grademanager-android-feature = { id = "grademanager.android.feature" }
+grademanager-android-room = { id = "grademanager.android.room" }
+grademanager-android-datastore = { id = "grademanager.android.datastore" }
+
+grademanager-koin = { id = "grademanager.koin" }

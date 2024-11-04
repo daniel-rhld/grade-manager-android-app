@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_subjects_manage_create_title">Create subject</string>
+    <string name="feature_subjects_manage_update_title">Edit subject</string>
+    <string name="feature_subjects_manage_name_hint">Name of the subject</string>
+    <string name="feature_subjects_manage_button_save">Save</string>
+    <string name="feature_subjects_manage_error_no_name">Please enter the name of the subject</string>
+    <string name="feature_subjects_manage_error_subject_not_found">This subject was not found</string>
+    <string name="feature_subjects_manage_error_subject_with_same_name_already_exists">There is already a subject with this name</string>
+</resources>

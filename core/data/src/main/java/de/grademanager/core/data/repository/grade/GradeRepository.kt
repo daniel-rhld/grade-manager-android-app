@@ -1,6 +1,6 @@
 package de.grademanager.core.data.repository.grade
 
-import de.grademanager.core.data.util.DataResult
+import de.grademanager.common.util.DataResult
 import de.grademanager.core.database.model.grade.GradeEntity
 import de.grademanager.core.model.Grade
 import de.grademanager.core.model.GradeOrdering

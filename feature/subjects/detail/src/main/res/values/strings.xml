@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_subjects_detail_no_grades_created_label">Currently you have not created any grades in this subject</string>
+    <string name="feature_subjects_detail_button_create_first_grade">Create your first grade</string>
+    <string name="feature_subjects_detail_grade_label_no_description">Without description</string>
+    <string name="feature_subjects_detail_grade_deleted">Grade has been deleted</string>
+    <string name="feature_subjects_detail_grade_deleted_revert">Undo</string>
+    <string name="feature_subjects_detail_grade_average_label">Average:</string>
+
+    <string name="feature_subjects_detail_change_grade_ordering_dialog_title">Ordering</string>
+    <string name="feature_subjects_detail_change_grade_ordering_dialog_label_grade">Grade</string>
+    <string name="feature_subjects_detail_change_grade_ordering_dialog_label_received_at">Received at</string>
+</resources>

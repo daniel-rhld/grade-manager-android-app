@@ -1,4 +1,4 @@
-package de.grademanager.core.data.util
+package de.grademanager.common.util
 
 sealed class DataResult <out T> {
     data class Success <T> (val value: T) : DataResult<T>()

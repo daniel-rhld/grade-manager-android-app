@@ -1,7 +1,7 @@
 package de.grademanager.core.data.repository.grade
 
 import androidx.datastore.core.DataStore
-import de.grademanager.core.data.util.DataResult
+import de.grademanager.common.util.DataResult
 import de.grademanager.core.database.dao.GradeDao
 import de.grademanager.core.database.model.grade.GradeEntity
 import de.grademanager.core.database.model.grade.asExternalModel

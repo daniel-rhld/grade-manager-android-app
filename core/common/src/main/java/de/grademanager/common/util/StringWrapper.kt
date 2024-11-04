@@ -1,4 +1,4 @@
-package de.grademanager.core.data.util
+package de.grademanager.common.util
 
 import android.content.Context
 import androidx.annotation.StringRes

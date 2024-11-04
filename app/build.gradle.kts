@@ -38,13 +38,13 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlin {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_1_8)
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
 
@@ -55,6 +55,13 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.database)
+    implementation(projects.core.datastore)
+    implementation(projects.core.data)
+    implementation(projects.core.domain)
+
+    implementation(projects.feature.subjects.overview)
+
     implementation(libs.androidx.core)
     implementation(libs.androidx.activity)
     //implementation(libs.multidex)

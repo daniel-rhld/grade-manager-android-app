@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_subjects_overview_toolbar_title">Subjects</string>
+    <string name="feature_subjects_overview_no_subjects_created_label">Currently you have not created any subjects</string>
+    <string name="feature_subjects_overview_button_create_first_subjects">Create your first subject</string>
+    <string name="feature_subjects_overview_grade_average_label">Overall average:</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_subjects_manage_create_title">Fach erstellen</string>
+    <string name="feature_subjects_manage_update_title">Fach bearbeiten</string>
+    <string name="feature_subjects_manage_name_hint">Name des Faches</string>
+    <string name="feature_subjects_manage_button_save">Speichern</string>
+    <string name="feature_subjects_manage_error_no_name">Bitte gib den Namen des Faches an</string>
+    <string name="feature_subjects_manage_error_subject_not_found">Dieses Fach wurde nicht gefunden</string>
+    <string name="feature_subjects_manage_error_subject_with_same_name_already_exists">Es existiert bereits ein Fach mit diesem Namen</string>
+</resources>
