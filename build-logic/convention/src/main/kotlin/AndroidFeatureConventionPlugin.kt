@@ -20,8 +20,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 add("implementation", project(":core:ui"))
                 add("implementation", project(":core:designsystem"))
 
-                add("implementation", libs.findLibrary("navigation.core").get())
-                add("ksp", libs.findLibrary("navigation.compiler").get())
+                add("implementation", libs.findLibrary("navigation").get())
 
                 add("implementation", libs.findLibrary("androidx.lifecycle.runtime").get())
                 add("implementation", libs.findLibrary("androidx.lifecycle.viewmodel").get())

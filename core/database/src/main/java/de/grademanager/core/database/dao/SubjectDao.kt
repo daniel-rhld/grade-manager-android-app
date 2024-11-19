@@ -29,6 +29,10 @@ interface SubjectDao {
     @Query("SELECT s.* FROM subjects s WHERE id = :id")
     suspend fun findById(id: Int): SubjectWithGrades?
 
+    @Transaction
+    @Query("SELECT s.* FROM subjects s WHERE id = :id")
+    fun findByIdAsFlow(id: Int): Flow<SubjectWithGrades?>
+
     @Upsert
     suspend fun upsert(value: SubjectEntity)
 

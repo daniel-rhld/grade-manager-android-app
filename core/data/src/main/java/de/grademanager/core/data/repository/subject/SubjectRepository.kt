@@ -16,6 +16,8 @@ interface SubjectRepository {
 
     suspend fun findById(id: Int): DataResult<Subject>
 
+    fun findByIdAsFlow(id: Int): Flow<DataResult<Subject>>
+
     suspend fun upsert(value: SubjectEntity): DataResult<Unit>
 
     suspend fun delete(subjectId: Int): DataResult<Unit>

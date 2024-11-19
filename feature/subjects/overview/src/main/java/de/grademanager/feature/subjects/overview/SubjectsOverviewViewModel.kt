@@ -30,6 +30,7 @@ class SubjectsOverviewViewModel(
     val uiState = State(
         SubjectOverviewUiState(
             subjects = emptyList(),
+            overallGradesVisible = false,
             averageGrade = 1.0
         )
     )
@@ -61,6 +62,10 @@ class SubjectsOverviewViewModel(
                 orderColumn = "name",
                 orderAscending = true
             ).collectLatest { subjects ->
+                val hasAnyGrades = subjects.map {
+                    it.grades
+                }.flatten().isNotEmpty()
+
                 uiState.update {
                     it.copy(
                         subjects = subjects.map { subject ->
@@ -71,9 +76,14 @@ class SubjectsOverviewViewModel(
                                 )
                             )
                         },
-                        averageGrade = calculateAverageSubjectGradeUseCase.calculateAverageSubjectGrade(
-                            subjects = subjects
-                        )
+                        overallGradesVisible = hasAnyGrades,
+                        averageGrade = if (hasAnyGrades) {
+                            calculateAverageSubjectGradeUseCase.calculateAverageSubjectGrade(
+                                subjects = subjects
+                            )
+                        } else {
+                            0.0
+                        }
                     )
                 }
             }

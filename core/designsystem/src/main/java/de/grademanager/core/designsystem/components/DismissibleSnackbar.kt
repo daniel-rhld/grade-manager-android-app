@@ -27,7 +27,6 @@ import de.grademanager.core.designsystem.theme.GradeManagerTheme
 @Composable
 fun DismissibleSnackbar(
     snackbarData: SnackbarData,
-    padding: PaddingValues,
     onDismiss: () -> Unit,
     containerColor: Color? = null,
     contentColor: Color? = null,
@@ -56,7 +55,7 @@ fun DismissibleSnackbar(
                     actionContentColor = contentColor ?: SnackbarDefaults.contentColor,
                     actionOnNewLine = true,
                     shape = RoundedCornerShape(size = 8.dp),
-                    modifier = Modifier.fillMaxWidth().padding(padding)
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
         )
@@ -82,7 +81,6 @@ private fun PreviewDismissibleSnackbar() {
                     override fun performAction() = Unit
 
                 },
-                padding = PaddingValues(all = 16.dp),
                 onDismiss = {}
             )
         }

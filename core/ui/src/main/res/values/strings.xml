@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="date_format_short">dd MM yyyy</string>
+    <string name="core_ui_date_format_short">dd MM yyyy</string>
 
-    <string name="subject_component_grade_label_no_description">Without description</string>
+    <string name="core_ui_subject_component_grade_label_no_description">Without description</string>
 </resources>

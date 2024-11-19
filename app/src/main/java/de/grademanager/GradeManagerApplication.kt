@@ -4,8 +4,10 @@ import android.app.Application
 import de.grademanager.core.data.di.RepositoryModule
 import de.grademanager.core.database.di.DaoModule
 import de.grademanager.core.database.di.DatabaseModule
-import de.grademanager.core.di.AppModule
+import de.grademanager.core.domain.di.SnackbarControllerModule
 import de.grademanager.core.domain.di.UseCaseModule
+import de.grademanager.feature.subjects.detail.di.SubjectDetailModule
+import de.grademanager.feature.subjects.overview.di.SubjectOverviewModule
 import de.grademanger.core.datastore.di.DataStoreModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -25,10 +27,13 @@ class GradeManagerApplication : Application() {
                 DaoModule,
                 DataStoreModule,
                 RepositoryModule,
-                UseCaseModule
-            )
 
-            modules(AppModule)
+                UseCaseModule,
+                SnackbarControllerModule,
+
+                SubjectOverviewModule,
+                SubjectDetailModule
+            )
         }
     }
 

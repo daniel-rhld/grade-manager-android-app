@@ -46,7 +46,6 @@ import de.grademanager.core.designsystem.theme.AppAssets
 import de.grademanager.core.designsystem.theme.GradeManagerTheme
 import de.grademanager.core.model.Grade
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 @Composable
@@ -148,7 +147,7 @@ fun GradeComponent(
                 ) {
                     Text(
                         text = SimpleDateFormat(
-                            stringResource(R.string.date_format_short),
+                            stringResource(R.string.core_ui_date_format_short),
                             Locale.getDefault()
                         ).format(grade.receivedAt),
                         fontSize = 16.sp,
@@ -157,7 +156,7 @@ fun GradeComponent(
 
                     Text(
                         text = grade.description ?: stringResource(
-                            id = R.string.subject_component_grade_label_no_description
+                            id = R.string.core_ui_subject_component_grade_label_no_description
                         ),
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Normal,

@@ -3,9 +3,13 @@ package de.grademanager.feature.subjects.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.navArgument
+import androidx.navigation.toRoute
 import de.grademanager.common.util.State
 import de.grademanager.common.util.asStringWrapper
 import de.grademanager.common.util.fold
+import de.grademanager.core.descriptors.SnackbarType
+import de.grademanager.core.domain.controller.snackbar.SnackbarController
 import de.grademanager.core.domain.use_case.calculate_average_grade.CalculateAverageGradeUseCase
 import de.grademanager.core.domain.use_case.grade_create.CreateGradeUseCase
 import de.grademanager.core.domain.use_case.grade_delete.DeleteGradeUseCase
@@ -13,6 +17,7 @@ import de.grademanager.core.domain.use_case.grade_get_for_subject.GetGradesForSu
 import de.grademanager.core.domain.use_case.grade_ordering_get.GetGradeOrderingUseCase
 import de.grademanager.core.domain.use_case.grade_ordering_update.UpdateGradeOrderingUseCase
 import de.grademanager.core.domain.use_case.grade_restore.RestoreGradeUseCase
+import de.grademanager.core.domain.use_case.subject_find_by_id.FindSubjectByIdUseCase
 import de.grademanager.core.model.GradeOrdering
 import de.grademanager.core.model.OrderingDirection
 import de.grademanager.feature.grades.add.AddGradeDialogUiEvent
@@ -22,6 +27,8 @@ import kotlinx.coroutines.launch
 import java.util.Date
 
 class SubjectDetailViewModel(
+    private val findSubjectByIdUseCase: FindSubjectByIdUseCase,
+
     private val getAllGradesForSubjectUseCase: GetGradesForSubjectUseCase,
 
     private val createGradeUseCase: CreateGradeUseCase,
@@ -38,7 +45,7 @@ class SubjectDetailViewModel(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val navArgs = SubjectDetailScreenDestination.argsFrom(savedStateHandle)
+    private val navArgs = savedStateHandle.toRoute<SubjectDetailScreenDestination>()
 
     val uiState = State(
         SubjectDetailUiState(
@@ -64,6 +71,18 @@ class SubjectDetailViewModel(
     val changeGradeOrderingDialogVisible = State(false)
 
     init {
+        viewModelScope.launch {
+            findSubjectByIdUseCase.findSubjectByIdAsFlow(
+                id = navArgs.subjectId
+            ).collectLatest { subject ->
+                subject?.let {
+                    uiState.update {
+                        it.copy(subjectName = subject.name)
+                    }
+                }
+            }
+        }
+
         viewModelScope.launch {
             getGradeOrderingUseCase.invoke().collectLatest { gradeOrdering ->
                 getAllGradesForSubjectUseCase.invoke(
@@ -112,24 +131,23 @@ class SubjectDetailViewModel(
                     deleteGradeUseCase.invoke(gradeId = event.grade.id).let { result ->
                         result.fold(
                             onSuccess = {
-                                viewModelScope.launch {
-                                    snackbarController.showNeutralSnackbar(
-                                        message = R.string.feature_subjects_detail_grade_deleted.asStringWrapper(),
-                                        actionLabel = R.string.feature_subjects_detail_grade_deleted_revert.asStringWrapper(),
-                                        onActionClick = {
-                                            viewModelScope.launch {
-                                                restoreGradeUseCase.invoke(gradeId = event.grade.id)
-                                            }
+                                snackbarController.showSnackbar {
+                                    type = SnackbarType.INFO
+                                    message = R.string.feature_subjects_detail_grade_deleted.asStringWrapper()
+
+                                    action {
+                                        label = R.string.feature_subjects_detail_grade_deleted_revert.asStringWrapper()
+                                        action = {
+                                            restoreGradeUseCase.invoke(gradeId = event.grade.id)
                                         }
-                                    )
+                                    }
                                 }
                             },
                             onFailure = { error ->
-                                error?.let {
-                                    viewModelScope.launch {
-                                        snackbarController.showErrorSnackbar(
-                                            message = it
-                                        )
+                                error?.let { errorMessage ->
+                                    snackbarController.showSnackbar {
+                                        type = SnackbarType.ERROR
+                                        message = errorMessage
                                     }
                                 }
                             }
@@ -208,12 +226,12 @@ class SubjectDetailViewModel(
                                     }
                                 },
                                 onFailure = { error ->
-                                    error?.let {
-                                        viewModelScope.launch {
-                                            snackbarController.showErrorSnackbar(it)
+                                    error?.let { errorMessage ->
+                                        snackbarController.showSnackbar {
+                                            type = SnackbarType.ERROR
+                                            message = errorMessage
                                         }
                                     }
-
                                 }
                             )
                         }

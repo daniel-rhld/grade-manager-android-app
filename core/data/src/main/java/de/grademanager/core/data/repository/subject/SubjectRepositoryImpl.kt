@@ -43,6 +43,18 @@ class SubjectRepositoryImpl(
         }
     }
 
+    override fun findByIdAsFlow(id: Int): Flow<DataResult<Subject>> {
+        return subjectDao.findByIdAsFlow(id = id).map { subject ->
+            if (subject != null) {
+                DataResult.Success(subject.asExternalModel())
+            } else {
+                DataResult.Failure(
+                    error = "Subject not found".asStringWrapper()
+                )
+            }
+        }
+    }
+
     override suspend fun upsert(value: SubjectEntity): DataResult<Unit> {
         subjectDao.upsert(value)
         return DataResult.Success(Unit)

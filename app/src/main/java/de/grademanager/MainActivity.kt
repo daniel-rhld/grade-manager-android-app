@@ -7,14 +7,8 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.ui.graphics.Color
-import de.grademanager.core.di.AppModule
-import de.grademanager.core.domain.ext.toColorInt
-import de.grademanager.core.presentation.screens.AppHost
-import de.grademanager.core.presentation.theme.GradeManagerTheme
-import de.grademanager.feature.subjects.di.SubjectsModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
+import de.grademanager.core.designsystem.theme.GradeManagerTheme
+import de.grademanager.core.ui.extensions.toColorInt
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +31,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             GradeManagerTheme {
-                AppHost()
+                GradeManagerHost()
             }
         }
 

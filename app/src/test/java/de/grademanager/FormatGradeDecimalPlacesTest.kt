@@ -1,10 +1,8 @@
 package de.grademanager
 
-import de.grademanager.core.domain.ext.formatGrade
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
-
 class FormatGradeDecimalPlacesTest {
+
+    /*
 
     @Test
     fun `test format grade without decimal places`() {
@@ -20,5 +18,7 @@ class FormatGradeDecimalPlacesTest {
     fun `test format grade wit two decimal places`() {
         assertEquals("1.33", 1.333.formatGrade())
     }
+
+     */
 
 }

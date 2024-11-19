@@ -16,14 +16,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootGraph
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import androidx.compose.ui.unit.dp
 import de.grademanager.core.designsystem.components.GradeManagerTopAppBar
 import de.grademanager.core.designsystem.theme.AppAssets
 import de.grademanager.core.designsystem.theme.GradeManagerTheme
@@ -33,15 +30,16 @@ import de.grademanager.core.ui.NoItemsIndicator
 import de.grademanager.core.ui.SubjectComponent
 import de.grademanager.core.ui.extensions.collectAsState
 import de.grademanager.feature.subjects.manage.ManageSubjectDialog
+import kotlinx.serialization.Serializable
 import org.koin.androidx.compose.koinViewModel
 
-@Destination<RootGraph>(start = true)
+@Serializable
+data object SubjectsOverviewScreenDestination
+
 @Composable
 fun SubjectsOverviewScreen(
-    navigator: DestinationsNavigator
+    navigateToSubjectRequested: (subjectId: Int) -> Unit
 ) {
-    val context = LocalContext.current
-
     val viewModel: SubjectsOverviewViewModel = koinViewModel()
     val uiState by viewModel.uiState.collectAsState()
 
@@ -69,9 +67,9 @@ fun SubjectsOverviewScreen(
         uiState = uiState,
         onUiEvent = { event ->
             when (event) {
-                is SubjectOverviewUiEvent.SubjectClick -> {
-                    // TODO: Navigate to subject detail screen
-                }
+                is SubjectOverviewUiEvent.SubjectClick -> navigateToSubjectRequested.invoke(
+                    event.subject.id
+                )
 
                 is SubjectOverviewUiEvent.SubjectLongClick -> {
                     // TODO: Add vibration effect
@@ -104,7 +102,13 @@ fun SubjectsOverviewScreen(
                             SubjectOverviewUiEvent.ButtonCreateFirstSubjectClick
                         )
                     },
-                    modifier = Modifier.padding(bottom = AppAssets.sizes.bottomGradeAverageComponentHeight)
+                    modifier = Modifier.padding(
+                        bottom = if (uiState.overallGradesVisible) {
+                            AppAssets.sizes.bottomGradeAverageComponentHeight
+                        } else {
+                            0.dp
+                        }
+                    )
                 ) {
                     Icon(
                         imageVector = Icons.Rounded.Add,
@@ -128,7 +132,11 @@ fun SubjectsOverviewScreen(
                         top = AppAssets.spacing.screenSpacing,
                         end = AppAssets.spacing.screenSpacing,
                         start = AppAssets.spacing.screenSpacing,
-                        bottom = AppAssets.scaffoldWithFabBottomPadding
+                        bottom = if (uiState.overallGradesVisible) {
+                            AppAssets.scaffoldWithFabBottomPadding
+                        } else {
+                            AppAssets.spacing.screenSpacing
+                        }
                     ),
                     verticalArrangement = Arrangement.spacedBy(AppAssets.spacing.verticalItemSpacing)
                 ) {
@@ -147,18 +155,19 @@ fun SubjectsOverviewScreen(
                             onLongClick = {
                                 onUiEvent.invoke(
                                     SubjectOverviewUiEvent.SubjectLongClick(subject = subject.self)
-                                )                        },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .animateItem()
+                                )
+                            },
+                            modifier = Modifier.fillMaxWidth().animateItem()
                         )
                     }
                 }
 
-                BottomAverageGradeComponent(
-                    label = stringResource(R.string.feature_subjects_overview_grade_average_label),
-                    grade = uiState.averageGrade
-                )
+                if (uiState.overallGradesVisible) {
+                    BottomAverageGradeComponent(
+                        label = stringResource(R.string.feature_subjects_overview_grade_average_label),
+                        grade = uiState.averageGrade
+                    )
+                }
             }
         } else {
             NoItemsIndicator(
@@ -183,7 +192,13 @@ private class SubjectOverviewUiStatePreviewParameterProvider : PreviewParameterP
         get() = sequenceOf(
             SubjectOverviewUiState(
                 subjects = listOf(ModelMock.SubjectWithAverageGrade),
+                overallGradesVisible = true,
                 averageGrade = 1.75
+            ),
+            SubjectOverviewUiState(
+                subjects = listOf(ModelMock.SubjectWithAverageGrade),
+                overallGradesVisible = false,
+                averageGrade = 0.0
             )
         )
 }

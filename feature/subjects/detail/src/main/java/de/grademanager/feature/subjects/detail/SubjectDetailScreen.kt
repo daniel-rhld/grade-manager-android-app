@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
@@ -20,7 +19,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
@@ -31,9 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootGraph
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import androidx.navigation.NavController
 import de.grademanager.core.designsystem.components.GradeManagerTopAppBar
 import de.grademanager.core.designsystem.icons.GradeManagerIcons
 import de.grademanager.core.designsystem.theme.AppAssets
@@ -46,17 +42,23 @@ import de.grademanager.core.ui.GradeComponent
 import de.grademanager.core.ui.NoItemsIndicator
 import de.grademanager.core.ui.extensions.collectAsState
 import de.grademanager.feature.grades.add.AddGradeDialog
+import kotlinx.serialization.Serializable
 import org.koin.androidx.compose.koinViewModel
 import java.util.Calendar
 import java.util.Date
 
+@Serializable
+data class SubjectDetailScreenDestination(
+    val subjectId: Int,
+    val subjectName: String
+)
+
 @OptIn(ExperimentalMaterial3Api::class)
-@Destination<RootGraph>
 @Composable
 fun SubjectDetailScreen(
     subjectId: Int,
     subjectName: String,
-    navigator: DestinationsNavigator
+    navController: NavController
 ) {
     val viewModel: SubjectDetailViewModel = koinViewModel()
     val uiState by viewModel.uiState.collectAsState()
@@ -137,7 +139,7 @@ fun SubjectDetailScreen(
         onUiEvent = { event ->
             when (event) {
                 is SubjectDetailUiEvent.NavigationIconClick -> {
-                    navigator.navigateUp()
+                    navController.popBackStack()
                 }
 
                 is SubjectDetailUiEvent.GradeClick -> {

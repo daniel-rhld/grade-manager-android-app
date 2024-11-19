@@ -16,6 +16,8 @@ import de.grademanager.core.domain.use_case.grade_restore.RestoreGradeUseCase
 import de.grademanager.core.domain.use_case.grade_restore.RestoreGradeUseCaseImpl
 import de.grademanager.core.domain.use_case.subject_create.CreateSubjectUseCase
 import de.grademanager.core.domain.use_case.subject_create.CreateSubjectUseCaseImpl
+import de.grademanager.core.domain.use_case.subject_find_by_id.FindSubjectByIdUseCase
+import de.grademanager.core.domain.use_case.subject_find_by_id.FindSubjectByIdUseCaseImpl
 import de.grademanager.core.domain.use_case.subject_get_ordered.GetSubjectsOrderedUseCase
 import de.grademanager.core.domain.use_case.subject_get_ordered.GetSubjectsOrderedUseCaseImpl
 import de.grademanager.core.domain.use_case.subject_update.UpdateSubjectUseCase
@@ -66,6 +68,12 @@ val UseCaseModule = module {
 
     single<CreateSubjectUseCase> {
         CreateSubjectUseCaseImpl(
+            subjectRepository = get()
+        )
+    }
+
+    single<FindSubjectByIdUseCase> {
+        FindSubjectByIdUseCaseImpl(
             subjectRepository = get()
         )
     }
