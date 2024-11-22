@@ -1,4 +1,4 @@
-package de.grademanger.core.datastore.model
+package de.grademanger.core.datastore.model.grade_ordering
 
 import de.grademanager.core.model.OrderingDirection
 import kotlinx.serialization.Serializable

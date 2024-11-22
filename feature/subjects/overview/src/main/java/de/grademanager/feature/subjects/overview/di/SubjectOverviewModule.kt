@@ -10,7 +10,8 @@ val SubjectOverviewModule = module {
             getSubjectsOrderedUseCase = get(),
             createSubjectUseCase = get(),
             updateSubjectUseCase = get(),
-            calculateAverageSubjectGradeUseCase = get()
+            calculateAverageSubjectGradeUseCase = get(),
+            authRepository = get()
         )
     }
 }

@@ -1,9 +1,11 @@
 package de.grademanager.feature.subjects.overview
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.grademanager.common.util.State
 import de.grademanager.common.util.fold
+import de.grademanager.core.data.repository.auth.AuthRepository
 import de.grademanager.core.domain.use_case.calculate_average_grade.CalculateAverageGradeUseCase
 import de.grademanager.core.domain.use_case.subject_create.CreateSubjectUseCase
 import de.grademanager.core.domain.use_case.subject_get_ordered.GetSubjectsOrderedUseCase
@@ -24,7 +26,9 @@ class SubjectsOverviewViewModel(
     private val createSubjectUseCase: CreateSubjectUseCase,
     private val updateSubjectUseCase: UpdateSubjectUseCase,
 
-    private val calculateAverageSubjectGradeUseCase: CalculateAverageGradeUseCase
+    private val calculateAverageSubjectGradeUseCase: CalculateAverageGradeUseCase,
+
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     val uiState = State(
@@ -57,6 +61,15 @@ class SubjectsOverviewViewModel(
     private var subjectToEdit = State<Subject?>(null)
 
     init {
+        viewModelScope.launch {
+            authRepository.login(
+                emailAddress = "daniel.reinhold@proton.me",
+                password = "Test123."
+            ).collectLatest { state ->
+                Log.i("GradeManager", "State is $state")
+            }
+        }
+
         viewModelScope.launch {
             getSubjectsOrderedUseCase.invoke(
                 orderColumn = "name",

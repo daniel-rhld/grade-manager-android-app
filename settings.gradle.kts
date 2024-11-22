@@ -35,3 +35,5 @@ include(":feature:subjects:detail")
 
 include(":feature:grades")
 include(":feature:grades:add")
+include(":core:network")
+include(":feature:auth:login")

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="core_network_default_error_message">Ein Fehler ist aufgetreten</string>
+</resources>

@@ -12,6 +12,8 @@ import de.grademanager.core.ui.extensions.toColorInt
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        /*
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.auto(
                 lightScrim = Color.Transparent.toColorInt(),
@@ -26,6 +28,9 @@ class MainActivity : ComponentActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             window.isNavigationBarContrastEnforced = false
         }
+         */
+
+        enableEdgeToEdge()
 
         super.onCreate(savedInstanceState)
 

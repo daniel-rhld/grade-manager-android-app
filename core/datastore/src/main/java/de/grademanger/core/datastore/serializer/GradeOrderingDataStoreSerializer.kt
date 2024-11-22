@@ -2,8 +2,8 @@ package de.grademanger.core.datastore.serializer
 
 import android.util.Log
 import androidx.datastore.core.Serializer
-import de.grademanger.core.datastore.model.GradeOrderingDataStore
-import de.grademanger.core.datastore.model.GradeOrderingDirection
+import de.grademanger.core.datastore.model.grade_ordering.GradeOrderingDataStore
+import de.grademanger.core.datastore.model.grade_ordering.GradeOrderingDirection
 import kotlinx.serialization.json.Json
 import java.io.InputStream
 import java.io.OutputStream

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_auth_login_toolbar_title">Login</string>
+
+    <string name="feature_auth_login_text_field_email_address_placeholder">Email-Adresse</string>
+    <string name="feature_auth_login_text_field_password_placeholder">Passwort</string>
+    <string name="feature_auth_login_button_login_label">Anmelden</string>
+    <string name="feature_auth_login_label_alternative_authentication_methods">oder</string>
+    <string name="feature_auth_login_button_register_label">Registrieren</string>
+
+    <string name="feature_auth_login_error_email_empty">Bitte gib deine Email-Adresse ein</string>
+    <string name="feature_auth_login_error_invalid_email">Bitte gib eine gültige Email-Adresse ein</string>
+    <string name="feature_auth_login_error_password_empty">Bitte gib dein Paaswort ein</string>
+</resources>

@@ -49,7 +49,7 @@ class SubjectDetailViewModel(
 
     val uiState = State(
         SubjectDetailUiState(
-            subjectName = navArgs.subjectName,
+            subjectName = "Loading...",
             grades = emptyList(),
             averageGrade = 1.0,
             gradeOrdering = GradeOrdering.Value(direction = OrderingDirection.DESCENDING)

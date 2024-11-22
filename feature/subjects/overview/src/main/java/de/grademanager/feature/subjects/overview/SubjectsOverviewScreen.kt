@@ -3,7 +3,6 @@ package de.grademanager.feature.subjects.overview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,9 +20,11 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import de.grademanager.core.designsystem.components.AppSnackbarHost
 import de.grademanager.core.designsystem.components.GradeManagerTopAppBar
 import de.grademanager.core.designsystem.theme.AppAssets
 import de.grademanager.core.designsystem.theme.GradeManagerTheme
+import de.grademanager.core.domain.controller.snackbar.SnackbarController
 import de.grademanager.core.mock.ModelMock
 import de.grademanager.core.ui.BottomAverageGradeComponent
 import de.grademanager.core.ui.NoItemsIndicator
@@ -32,6 +33,7 @@ import de.grademanager.core.ui.extensions.collectAsState
 import de.grademanager.feature.subjects.manage.ManageSubjectDialog
 import kotlinx.serialization.Serializable
 import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
 
 @Serializable
 data object SubjectsOverviewScreenDestination
@@ -116,13 +118,16 @@ fun SubjectsOverviewScreen(
                     )
                 }
             }
+        },
+        snackbarHost = {
+            AppSnackbarHost(
+                snackbarData = koinInject<SnackbarController>().snackbarData
+            )
         }
     ) { padding ->
         if (uiState.subjects.isNotEmpty()) {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
+                modifier = Modifier.padding(padding)
             ) {
                 LazyColumn(
                     modifier = Modifier

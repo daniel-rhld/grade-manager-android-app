@@ -30,10 +30,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import de.grademanager.core.designsystem.components.AppSnackbarHost
 import de.grademanager.core.designsystem.components.GradeManagerTopAppBar
 import de.grademanager.core.designsystem.icons.GradeManagerIcons
 import de.grademanager.core.designsystem.theme.AppAssets
 import de.grademanager.core.designsystem.theme.GradeManagerTheme
+import de.grademanager.core.domain.controller.snackbar.SnackbarController
 import de.grademanager.core.mock.ModelMock
 import de.grademanager.core.model.GradeOrdering
 import de.grademanager.core.model.OrderingDirection
@@ -44,20 +46,19 @@ import de.grademanager.core.ui.extensions.collectAsState
 import de.grademanager.feature.grades.add.AddGradeDialog
 import kotlinx.serialization.Serializable
 import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
 import java.util.Calendar
 import java.util.Date
 
 @Serializable
 data class SubjectDetailScreenDestination(
-    val subjectId: Int,
-    val subjectName: String
+    val subjectId: Int
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SubjectDetailScreen(
     subjectId: Int,
-    subjectName: String,
     navController: NavController
 ) {
     val viewModel: SubjectDetailViewModel = koinViewModel()
@@ -201,6 +202,11 @@ private fun SubjectDetailScreen(
                     )
                 }
             }
+        },
+        snackbarHost = {
+            AppSnackbarHost(
+                snackbarData = koinInject<SnackbarController>().snackbarData
+            )
         }
     ) { padding ->
         if (uiState.grades.isNotEmpty()) {

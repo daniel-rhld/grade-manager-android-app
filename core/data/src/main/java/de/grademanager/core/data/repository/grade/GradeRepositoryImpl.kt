@@ -7,9 +7,9 @@ import de.grademanager.core.database.model.grade.GradeEntity
 import de.grademanager.core.database.model.grade.asExternalModel
 import de.grademanager.core.model.Grade
 import de.grademanager.core.model.GradeOrdering
-import de.grademanger.core.datastore.model.GradeOrderingDataStore
-import de.grademanger.core.datastore.model.asDataStore
-import de.grademanger.core.datastore.model.asExternalModel
+import de.grademanger.core.datastore.model.grade_ordering.GradeOrderingDataStore
+import de.grademanger.core.datastore.model.grade_ordering.asDataStore
+import de.grademanger.core.datastore.model.grade_ordering.asExternalModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
