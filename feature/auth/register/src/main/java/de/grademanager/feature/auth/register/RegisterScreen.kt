@@ -18,6 +18,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -47,7 +50,41 @@ import de.grademanager.core.designsystem.theme.AppAssets
 import de.grademanager.core.designsystem.theme.GradeManagerTheme
 import de.grademanager.core.domain.controller.snackbar.SnackbarController
 import de.grademanager.core.ui.BrandLogo
+import kotlinx.serialization.Serializable
+import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
+
+@Serializable
+data object RegisterScreenDestination
+
+@Composable
+fun RegisterScreen(
+    navigateToSubjectOverviewRequested: () -> Unit,
+    navigateToLoginRequested: () -> Unit
+) {
+    val viewModel: RegisterViewModel = koinViewModel()
+    val uiState by viewModel.uiState.collectAsState()
+    val registrationSucceeded by viewModel.registrationSucceeded.collectAsState()
+
+    LaunchedEffect(key1 = registrationSucceeded) {
+        if (registrationSucceeded) {
+            navigateToSubjectOverviewRequested.invoke()
+        }
+    }
+
+    RegisterScreen(
+        uiState = uiState,
+        onUiEvent = { event ->
+            when (event) {
+                is RegisterUiEvent.NavigateToLoginRequested -> {
+                    navigateToLoginRequested.invoke()
+                }
+
+                else -> viewModel.onUiEvent(event)
+            }
+        }
+    )
+}
 
 @Composable
 fun RegisterScreen(

@@ -52,6 +52,7 @@ dependencies {
     implementation(projects.core.designsystem)
     implementation(projects.core.ui)
 
+    implementation(projects.feature.auth.register)
     implementation(projects.feature.auth.login)
 
     implementation(projects.feature.subjects.overview)

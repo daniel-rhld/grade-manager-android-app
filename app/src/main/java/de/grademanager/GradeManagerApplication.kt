@@ -8,6 +8,7 @@ import de.grademanager.core.domain.di.SnackbarControllerModule
 import de.grademanager.core.domain.di.UseCaseModule
 import de.grademanager.core.network.di.NetworkModule
 import de.grademanager.feature.auth.login.di.LoginModule
+import de.grademanager.feature.auth.register.di.RegisterModule
 import de.grademanager.feature.subjects.detail.di.SubjectDetailModule
 import de.grademanager.feature.subjects.overview.di.SubjectOverviewModule
 import de.grademanger.core.datastore.di.DataStoreModule
@@ -34,6 +35,7 @@ class GradeManagerApplication : Application() {
                 UseCaseModule,
                 SnackbarControllerModule,
 
+                RegisterModule,
                 LoginModule,
 
                 SubjectOverviewModule,

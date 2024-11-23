@@ -10,6 +10,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import de.grademanager.feature.auth.login.LoginScreen
 import de.grademanager.feature.auth.login.LoginScreenDestination
+import de.grademanager.feature.auth.register.RegisterScreen
+import de.grademanager.feature.auth.register.RegisterScreenDestination
 import de.grademanager.feature.subjects.detail.SubjectDetailScreen
 import de.grademanager.feature.subjects.detail.SubjectDetailScreenDestination
 import de.grademanager.feature.subjects.overview.SubjectsOverviewScreen
@@ -21,11 +23,24 @@ fun GradeManagerHost() {
 
     NavHost(
         navController = navController,
-        startDestination = LoginScreenDestination,
+        startDestination = RegisterScreenDestination,
         modifier = Modifier
             .fillMaxSize()
             .imePadding()
     ) {
+        composable<RegisterScreenDestination> {
+            RegisterScreen(
+                navigateToLoginRequested = {
+                    // TODO: Navigate to login
+                },
+                navigateToSubjectOverviewRequested = {
+                    navController.navigate(
+                        SubjectsOverviewScreenDestination
+                    )
+                }
+            )
+        }
+
         composable<LoginScreenDestination> {
             LoginScreen(
                 navigateToRegistrationRequested = {

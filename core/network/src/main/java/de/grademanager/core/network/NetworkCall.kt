@@ -36,7 +36,7 @@ inline fun <reified T> networkCall(
             emit(RequestState.Loading)
 
             val response = call.invoke()
-            Log.d(HTTP_CLIENT_LOGGING_TAG, "[HttpClient][$tag] HTTP-Request executed with URL ${response.call.request.url}}")
+            Log.d(HTTP_CLIENT_LOGGING_TAG, "[HttpClient][$tag] HTTP-Request executed with URL ${response.call.request.url}")
 
             if (response.status in SUCCESSFUL_STATUS_CODES) {
                 try {

@@ -2,7 +2,6 @@ package de.grademanager.feature.auth.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.grademanager.common.util.State
 import de.grademanager.common.util.asStringWrapper
 import de.grademanager.core.descriptors.SnackbarType
 import de.grademanager.core.domain.controller.snackbar.SnackbarController
@@ -12,9 +11,7 @@ import de.grademanager.core.domain.use_case.validate_login_form.ValidateLoginFor
 import de.grademanager.core.network.unwrap
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -25,10 +22,7 @@ class LoginViewModel(
     private val snackbarController: SnackbarController
 ) : ViewModel() {
 
-    private val _emailAddress = MutableStateFlow("")
-    private val _password = MutableStateFlow("")
-
-    val _uiState = MutableStateFlow(
+    private val _uiState = MutableStateFlow(
         LoginUiState(
             emailAddress = "",
             password = "",
@@ -41,27 +35,18 @@ class LoginViewModel(
     private val _loginSucceeded = MutableStateFlow(false)
     val loginSucceeded = _loginSucceeded.asStateFlow()
 
-    init {
-        viewModelScope.launch {
-            combine(_emailAddress, _password) { emailAddress, password ->
-                _uiState.update {
-                    it.copy(
-                        emailAddress = emailAddress,
-                        password = password
-                    )
-                }
-            }.collect()
-        }
-    }
-
     fun onUiEvent(event: LoginUiEvent) {
         when (event) {
             is LoginUiEvent.EmailAddressChange -> {
-                _emailAddress.update { event.value }
+                _uiState.update {
+                    it.copy(emailAddress = event.value)
+                }
             }
 
             is LoginUiEvent.PasswordChange -> {
-                _password.update { event.value }
+                _uiState.update {
+                    it.copy(password = event.value)
+                }
             }
 
             is LoginUiEvent.TogglePasswordVisibility -> {
@@ -71,8 +56,8 @@ class LoginViewModel(
             }
 
             is LoginUiEvent.ButtonLoginClick -> {
-                val emailAddress = _emailAddress.value
-                val password = _password.value
+                val emailAddress = _uiState.value.emailAddress
+                val password = _uiState.value.password
 
                 validateLoginFormUseCase.invoke(
                     emailAddress = emailAddress,
