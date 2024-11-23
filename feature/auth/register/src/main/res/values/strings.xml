@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_auth_register_toolbar_title">Register</string>
+
+    <string name="feature_auth_register_text_field_firstname_placeholder">First name</string>
+    <string name="feature_auth_register_text_field_lastname_placeholder">Last name</string>
+    <string name="feature_auth_register_text_field_email_placeholder">Email address</string>
+    <string name="feature_auth_register_text_field_password_placeholder">Password</string>
+    <string name="feature_auth_register_text_field_password_confirmation_placeholder">Confirm password</string>
+    <string name="feature_auth_register_button_register_label">Register</string>
+    <string name="feature_auth_register_label_alternative_authentication_methods">or</string>
+    <string name="feature_auth_register_button_login_label">Login</string>
+
+    <string name="feature_auth_register_error_first_name_empty">Please enter your first name</string>
+    <string name="feature_auth_register_error_last_name_empty">Please enter your last name</string>
+    <string name="feature_auth_register_error_email_empty">Please enter your email address</string>
+    <string name="feature_auth_register_error_email_invalid">Please enter a valid email address</string>
+    <string name="feature_auth_register_error_password_empty">Please enter your password</string>
+    <string name="feature_auth_register_error_password_confirmation_empty">Please confirm your password</string>
+    <string name="feature_auth_register_error_password_confirmation_does_not_match">The password confirmation does not match the password</string>
+
+</resources>

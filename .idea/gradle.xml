@@ -38,6 +38,7 @@
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/auth" />
             <option value="$PROJECT_DIR$/feature/auth/login" />
+            <option value="$PROJECT_DIR$/feature/auth/register" />
             <option value="$PROJECT_DIR$/feature/grades" />
             <option value="$PROJECT_DIR$/feature/grades/add" />
             <option value="$PROJECT_DIR$/feature/subjects" />

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.grademanager.android.library)
     alias(libs.plugins.grademanager.android.library.compose)
+    alias(libs.plugins.grademanager.koin)
 }
 
 android {

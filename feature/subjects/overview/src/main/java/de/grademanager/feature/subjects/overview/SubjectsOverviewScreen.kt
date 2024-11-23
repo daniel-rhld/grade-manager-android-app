@@ -120,9 +120,7 @@ fun SubjectsOverviewScreen(
             }
         },
         snackbarHost = {
-            AppSnackbarHost(
-                snackbarData = koinInject<SnackbarController>().snackbarData
-            )
+            AppSnackbarHost()
         }
     ) { padding ->
         if (uiState.subjects.isNotEmpty()) {

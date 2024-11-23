@@ -1,6 +1,5 @@
 package de.grademanager.core.designsystem.components
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
@@ -12,7 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
@@ -20,12 +19,26 @@ import de.grademanager.common.util.get
 import de.grademanager.core.descriptors.SnackbarBuilder
 import de.grademanager.core.descriptors.SnackbarDuration
 import de.grademanager.core.descriptors.SnackbarType
+import de.grademanager.core.domain.controller.snackbar.SnackbarController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.koin.compose.koinInject
 
 typealias AndroidSnackbarDuration = androidx.compose.material3.SnackbarDuration
+
+@Composable
+fun AppSnackbarHost() {
+    AppSnackbarHost(
+        snackbarData = if (!LocalView.current.isInEditMode) {
+            koinInject<SnackbarController>().snackbarData
+        } else {
+            emptyFlow()
+        }
+    )
+}
 
 @Composable
 fun AppSnackbarHost(snackbarData: Flow<SnackbarBuilder>) {

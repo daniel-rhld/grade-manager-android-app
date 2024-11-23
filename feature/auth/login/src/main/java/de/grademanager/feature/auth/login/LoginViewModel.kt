@@ -28,13 +28,15 @@ class LoginViewModel(
     private val _emailAddress = MutableStateFlow("")
     private val _password = MutableStateFlow("")
 
-    val uiState = State(LoginUiState(
-        emailAddress = "",
-        password = "",
-        passwordVisible = false,
-        buttonLoginEnabled = false,
-        buttonLoginLoading = false
-    ))
+    val _uiState = MutableStateFlow(
+        LoginUiState(
+            emailAddress = "",
+            password = "",
+            passwordVisible = false,
+            buttonLoginLoading = false
+        )
+    )
+    val uiState = _uiState.asStateFlow()
 
     private val _loginSucceeded = MutableStateFlow(false)
     val loginSucceeded = _loginSucceeded.asStateFlow()
@@ -42,11 +44,10 @@ class LoginViewModel(
     init {
         viewModelScope.launch {
             combine(_emailAddress, _password) { emailAddress, password ->
-                uiState.update {
+                _uiState.update {
                     it.copy(
                         emailAddress = emailAddress,
-                        password = password,
-                        buttonLoginEnabled = emailAddress.isNotBlank() && password.isNotBlank()
+                        password = password
                     )
                 }
             }.collect()
@@ -64,7 +65,7 @@ class LoginViewModel(
             }
 
             is LoginUiEvent.TogglePasswordVisibility -> {
-                uiState.update { state ->
+                _uiState.update { state ->
                     state.copy(passwordVisible = !state.passwordVisible)
                 }
             }
@@ -89,7 +90,7 @@ class LoginViewModel(
                                 ).collectLatest { loginRequestState ->
                                     loginRequestState.unwrap(
                                         loading = {
-                                            uiState.update {
+                                            _uiState.update {
                                                 it.copy(buttonLoginLoading = true)
                                             }
                                         },
@@ -97,6 +98,9 @@ class LoginViewModel(
                                             _loginSucceeded.update { true }
                                         },
                                         failure = { error ->
+                                            _uiState.update {
+                                                it.copy(buttonLoginLoading = false)
+                                            }
                                             snackbarController.showSnackbar {
                                                 type = SnackbarType.ERROR
                                                 message = error

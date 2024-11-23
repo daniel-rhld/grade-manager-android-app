@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_auth_register_toolbar_title">Registrieren</string>
+
+    <string name="feature_auth_register_text_field_firstname_placeholder">Vorname</string>
+    <string name="feature_auth_register_text_field_lastname_placeholder">Nachname</string>
+    <string name="feature_auth_register_text_field_email_placeholder">Email-Adresse</string>
+    <string name="feature_auth_register_text_field_password_placeholder">Passwort</string>
+    <string name="feature_auth_register_text_field_password_confirmation_placeholder">Passwort bestätigen</string>
+    <string name="feature_auth_register_button_register_label">Registrieren</string>
+    <string name="feature_auth_register_label_alternative_authentication_methods">oder</string>
+    <string name="feature_auth_register_button_login_label">Einloggen</string>
+
+    <string name="feature_auth_register_error_first_name_empty">Bitte gib deinen Vornamen ein</string>
+    <string name="feature_auth_register_error_last_name_empty">Bitte gib deinen Nachnamen ein</string>
+    <string name="feature_auth_register_error_email_empty">Bitte gib deine Email-Adresse ein</string>
+    <string name="feature_auth_register_error_email_invalid">Bitte gib eine gültige Email-Adresse ein</string>
+    <string name="feature_auth_register_error_password_empty">Bitte gib ein Passwort ein</string>
+    <string name="feature_auth_register_error_password_confirmation_empty">Bitte bestätige dein Passwort</string>
+    <string name="feature_auth_register_error_password_confirmation_does_not_match">Die Passwortbestätigung stimmt nicht mit dem Passwort überein</string>
+
+</resources>
