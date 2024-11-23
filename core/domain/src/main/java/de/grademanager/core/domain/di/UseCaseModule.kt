@@ -16,6 +16,8 @@ import de.grademanager.core.domain.use_case.grade_restore.RestoreGradeUseCase
 import de.grademanager.core.domain.use_case.grade_restore.RestoreGradeUseCaseImpl
 import de.grademanager.core.domain.use_case.login.LoginUseCase
 import de.grademanager.core.domain.use_case.login.LoginUseCaseImpl
+import de.grademanager.core.domain.use_case.register.RegisterUseCase
+import de.grademanager.core.domain.use_case.register.RegisterUseCaseImpl
 import de.grademanager.core.domain.use_case.subject_create.CreateSubjectUseCase
 import de.grademanager.core.domain.use_case.subject_create.CreateSubjectUseCaseImpl
 import de.grademanager.core.domain.use_case.subject_find_by_id.FindSubjectByIdUseCase
@@ -26,6 +28,8 @@ import de.grademanager.core.domain.use_case.subject_update.UpdateSubjectUseCase
 import de.grademanager.core.domain.use_case.subject_update.UpdateSubjectUseCaseImpl
 import de.grademanager.core.domain.use_case.validate_login_form.ValidateLoginFormUseCase
 import de.grademanager.core.domain.use_case.validate_login_form.ValidateLoginFormUseCaseImpl
+import de.grademanager.core.domain.use_case.validate_register_form.ValidateRegisterFormUseCase
+import de.grademanager.core.domain.use_case.validate_register_form.ValidateRegisterFormUseCaseImpl
 import org.koin.dsl.module
 
 val UseCaseModule = module {
@@ -76,6 +80,12 @@ val UseCaseModule = module {
         )
     }
 
+    single<RegisterUseCase> {
+        RegisterUseCaseImpl(
+            authRepository = get()
+        )
+    }
+
     single<CreateSubjectUseCase> {
         CreateSubjectUseCaseImpl(
             subjectRepository = get()
@@ -102,6 +112,10 @@ val UseCaseModule = module {
 
     single<ValidateLoginFormUseCase> {
         ValidateLoginFormUseCaseImpl()
+    }
+
+    single<ValidateRegisterFormUseCase> {
+        ValidateRegisterFormUseCaseImpl()
     }
 
 }
